@@ -2,10 +2,9 @@ language: node_js
 
 node_js:
   # - "node"
-  - "lts/*"
+  - 'lts/*'
 
 script:
-  - node ./internals/scripts/generate-templates-for-linting
   - yarn test:ci --maxWorkers=4
   # uncomment the following command if you want to test build
   # - yarn build
@@ -19,7 +18,7 @@ notifications:
   email:
     on_failure: change
 
-after_success: "yarn coveralls && yarn codecov"
+after_success: 'yarn coveralls && yarn codecov'
 
 cache:
   yarn: true
