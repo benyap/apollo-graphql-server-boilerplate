@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es6", "es2015", "es2017"],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}

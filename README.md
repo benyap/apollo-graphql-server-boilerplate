@@ -44,7 +44,7 @@
   </a>
   <!-- Build Status - Appveyor -->
   <a href="https://ci.appveyor.com/project/bwyap/apollo-graphql-server-boilerplate">
-    <img src="https://ci.appveyor.com/api/projects/status/bx1ukbj359gbeshl?svg=true" alt="Build status (Appveyor)" />
+    <img src="https://ci.appveyor.com/api/projects/status/{TODO: PROJECT_APPVEYOR_ID}?svg=true" alt="Build status (Appveyor)" />
   </a>
   <!-- Build Status - CircleCI -->
   <a href="https://circleci.com/gh/bwyap/apollo-graphql-server-boilerplate">

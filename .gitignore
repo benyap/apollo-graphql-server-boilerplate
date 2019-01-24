@@ -59,3 +59,19 @@ typings/
 
 # next.js build output
 .next
+
+# build directories
+build
+directories
+
+# configuration secrets
+storage
+.env
+*.env
+*.env.sh
+
+# local certificates
+certs
+
+# don't version control local legacy files
+*.old
