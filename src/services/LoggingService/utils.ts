@@ -40,10 +40,10 @@ const colorize = (useColor: boolean, tag: string) => (message: string) => {
   }
 };
 
-export const wrapLevelTag = (tag: string, useColor: boolean) =>
+export const wrapLevelTag = (tag: ELogLevel, useColor: boolean) =>
   colorize(useColor, tag)(wrapTag(5)(tag));
 
-export const wrapTopicTag = (tag: string, useColor: boolean) =>
+export const wrapTopicTag = (tag: ELogTopic, useColor: boolean) =>
   colorize(useColor, tag)(wrapTag(4)(tag));
 
 export { colorize };

@@ -21,6 +21,8 @@ export class InMemoryCacheService<T>
     this.log(ELogLevel.DEBUG)(`Cache service initialised [${this.cacheName}].`);
   }
 
+  public getCacheName = () => this.cacheName;
+
   public hasRecord = (id: string) => !!this.records[id];
 
   public getRecords = () =>

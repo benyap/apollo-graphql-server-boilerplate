@@ -17,6 +17,7 @@ export class LoggingService extends AbstractService<LoggingServiceConfiguration>
   constructor() {
     super(EServiceName.LoggingService, 'GenericLoggingService');
   }
+
   public static readonly void = () => () => null;
 
   public async init(
@@ -27,12 +28,18 @@ export class LoggingService extends AbstractService<LoggingServiceConfiguration>
     this.useColor = useColor;
   }
 
+  public usingColor = () => this.useColor;
+
   public addOutput(name: string, output: FLoggerCustomOutputFunction) {
     this.outputs[name] = output;
   }
 
   public removeOutput(name: string) {
     delete this.outputs[name];
+  }
+
+  public getOutputs() {
+    return { ...this.outputs };
   }
 
   public createLogger(topic: ELogTopic, useColor: boolean = this.useColor) {

@@ -75,3 +75,8 @@ certs
 
 # don't version control local legacy files
 *.old
+
+# don't version control auto-generated files
+coverage
+stats.json
+test-results

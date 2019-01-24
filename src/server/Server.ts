@@ -1,9 +1,10 @@
-import * as fs from 'fs';
-import * as https from 'https';
-import * as express from 'express';
-import * as compression from 'compression';
-import * as cors from 'cors';
-import * as morgan from 'morgan';
+import fs from 'fs';
+import https from 'https';
+import express from 'express';
+import compression from 'compression';
+import cors from 'cors';
+import morgan from 'morgan';
+import enforce from 'express-sslify';
 
 import configureEnvironment from '../environment/configureEnvironment';
 
@@ -22,7 +23,6 @@ import initialiseBasicServices from './basicServices';
 export class Server {
   private config: ServerConfiguration;
   private log: FLoggerLevelOutputFunction;
-
   private serviceLibrary: IServiceLibrary;
 
   private server;
@@ -59,7 +59,11 @@ export class Server {
 
     // Initialise services
     this.log(ELogLevel.SILLY)(`Initalising services...`);
-    await initialiseBasicServices(this.config, loggingService, serviceLibrary);
+    await initialiseBasicServices(
+      this.config,
+      loggingService,
+      this.serviceLibrary,
+    );
 
     // TODO: add more services to be initialised here
 
@@ -89,6 +93,7 @@ export class Server {
     const subdomainsRegexPartial = this.config.subdomains
       .map(s => `${s}\.`)
       .join('|');
+
     const allowedOrigins = [
       // This allows the root domain and all subdomains with AND without `dev` and `qat` prefixes.
       new RegExp(
@@ -100,6 +105,9 @@ export class Server {
 
     // Allow localhost on non-production environments
     if (!PRODUCTION) allowedOrigins.push(/https?:\/\/localhost\:[0-9]{4}/);
+
+    // Set `trustProtoHeader` for Heroku. See https://www.npmjs.com/package/express-sslify
+    if (!LOCAL) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
     // Configure Express app
     app.use(cors({ origin: allowedOrigins }));

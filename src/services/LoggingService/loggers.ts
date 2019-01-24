@@ -1,4 +1,4 @@
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 import { ELogTopic, ELogLevel } from './enums';
 import { wrapLevelTag, wrapTopicTag, colorize } from './utils';

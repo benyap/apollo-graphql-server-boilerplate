@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as dotenv from 'dotenv';
+import fs from 'fs';
+import dotenv from 'dotenv';
 import { ELogLevel, LoggingService } from '../services/LoggingService';
 import { FLoggerLevelOutputFunction } from '../services/LoggingService/types';
 

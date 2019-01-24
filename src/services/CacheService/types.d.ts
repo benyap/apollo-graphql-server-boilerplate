@@ -32,6 +32,11 @@ export interface CacheServiceConfiguration {
 
 export interface ICacheService<T> extends IService<CacheServiceConfiguration> {
   /**
+   * Gets the name of the cache.
+   */
+  getCacheName(): string;
+
+  /**
    * Check if record is in the cache.
    * @param id the id of the record to check.
    */

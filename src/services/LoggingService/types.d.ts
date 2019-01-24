@@ -42,6 +42,11 @@ export type FLoggerLevelOutputFunction = (
 
 export interface ILoggingService extends IService<LoggingServiceConfiguration> {
   /**
+   * Returns true if the logging service has been configured to use color.
+   */
+  usingColor(): boolean;
+
+  /**
    * Add a function that will accept the output from the logger.
    * @param name name of the output function
    * @param output output function
@@ -55,8 +60,17 @@ export interface ILoggingService extends IService<LoggingServiceConfiguration> {
   removeOutput(name: string);
 
   /**
+   * Gets the map of outputs added to the logger.
+   */
+  getOutputs(): { [key: string]: FLoggerCustomOutputFunction };
+
+  /**
    * Create a logger that outputs to the specified logger topic.
    * @param topic the logger topic
+   * @param useColor pass true to force the logger to use color (default uses setting passed in config)
    */
-  createLogger(topic: ELogTopic): FLoggerLevelOutputFunction;
+  createLogger(
+    topic: ELogTopic,
+    useColor?: boolean,
+  ): FLoggerLevelOutputFunction;
 }
