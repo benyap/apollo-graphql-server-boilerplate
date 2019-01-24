@@ -1,0 +1,26 @@
+{
+  "name": "apollo-graphql-server-boilerplate",
+  "version": "0.0.1",
+  "description": "An opinionated Apollo GraphQL server stack boilerplate to kickstart your next project",
+  "main": "src/index.ts",
+  "scripts": {
+    "test:upload-appveyor": "node ./internals/scripts/upload-tests-appveyor"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bwyap/apollo-graphql-server-boilerplate.git"
+  },
+  "keywords": [
+    "apollo",
+    "apollo-server",
+    "graphql",
+    "boilerplate",
+    "typescript"
+  ],
+  "author": "Ben Yap <contact@benyap.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bwyap/apollo-graphql-server-boilerplate/issues"
+  },
+  "homepage": "https://github.com/bwyap/apollo-graphql-server-boilerplate#readme"
+}
