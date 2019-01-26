@@ -44,15 +44,11 @@
   </a>
   <!-- Build Status - Appveyor -->
   <a href="https://ci.appveyor.com/project/bwyap/apollo-graphql-server-boilerplate">
-    <img src="https://ci.appveyor.com/api/projects/status/{TODO: PROJECT_APPVEYOR_ID}?svg=true" alt="Build status (Appveyor)" />
+    <img src="https://ci.appveyor.com/api/projects/status/ywk6wlvw2mby5b3x?svg=true" alt="Build status (Appveyor)" />
   </a>
   <!-- Build Status - CircleCI -->
   <a href="https://circleci.com/gh/bwyap/apollo-graphql-server-boilerplate">
     <img src="https://img.shields.io/circleci/project/github/bwyap/apollo-graphql-server-boilerplate.svg?logo=CircleCI" alt="Build status (Circle CI)" />
-  </a>
-  <!-- Deploy Status - Netlify -->
-  <a href="https://app.netlify.com/sites/apollo-graphql-server-boilerplate/deploys">
-    <img src="https://img.shields.io/badge/dynamic/json.svg?url=https://api.netlify.com/api/v1/sites/apollo-graphql-server-boilerplate.netlify.com/deploys&label=deploy&query=$[0].state&colorB=blue" alt="Deploy status (Netlify)" />
   </a>
 </div>
 
@@ -62,12 +58,11 @@
 
 ---
 
-*An opinionated server stack using Apollo Server, written in Typescript.*
+_An opinionated server stack using Apollo Server, written in Typescript._
 
 > TODO: add more documentation
 
 ---
-
 
 ## License
 

@@ -24,12 +24,15 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Run tests
-          command: npm test
-      - run:
-          name: Run coverage
-          command: npm run coveralls
-      - codecov/upload:
-          file: coverage/coverage-final.json
+          command: npm test:ci
+      - store_test_results:
+          path: test-results
+      # The following two steps are done in Travis CI
+      # - run:
+      #     name: Run coverage
+      #     command: npm run coveralls
+      # - codecov/upload:
+      #     file: coverage/coverage-final.json
       - run:
           name: Run build
           command: npm run build
