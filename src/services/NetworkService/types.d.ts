@@ -8,7 +8,7 @@ interface BaseRequestOptions {
 }
 
 export interface GetRequestOptions extends BaseRequestOptions {
-  params?: { [key: string]: string };
+  params?: { [key: string]: string | number | object };
 }
 
 export interface PostRequestOptions extends BaseRequestOptions {
