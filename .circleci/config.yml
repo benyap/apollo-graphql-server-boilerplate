@@ -24,18 +24,18 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Run tests
-          command: npm test:ci
+          command: yarn test:ci
       - store_test_results:
           path: test-results
       # The following two steps are done in Travis CI
       # - run:
       #     name: Run coverage
-      #     command: npm run coveralls
+      #     command: yarn coveralls
       # - codecov/upload:
       #     file: coverage/coverage-final.json
       - run:
           name: Run build
-          command: npm run build
+          command: yarn build
 
 workflows:
   version: 2
