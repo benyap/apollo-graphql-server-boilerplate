@@ -10,19 +10,19 @@ import configureEnvironment from '../environment/configureEnvironment';
 
 import { ServerConfiguration } from './types';
 import createLoggingService, {
-  FLoggerLevelOutputFunction,
+  LoggerLevelOutputFn,
   LoggingService,
   ELogLevel,
   createDefaultLogger,
   ELogTopic,
 } from '../services/LoggingService';
 
-import { IServiceLibrary, ServiceLibrary } from '../services/ServiceLibrary';
+import ServiceLibrary, { IServiceLibrary } from '../services/ServiceLibrary';
 import initialiseBasicServices from './basicServices';
 
 export class Server {
   private config: ServerConfiguration;
-  private log: FLoggerLevelOutputFunction;
+  private log: LoggerLevelOutputFn;
   private serviceLibrary: IServiceLibrary;
 
   private server;

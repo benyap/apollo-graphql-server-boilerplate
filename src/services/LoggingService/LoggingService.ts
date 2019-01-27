@@ -4,7 +4,7 @@ import { AbstractService } from '../service/AbstractService';
 import {
   ILoggingService,
   LoggingServiceConfiguration,
-  FLoggerCustomOutputFunction,
+  LoggerCustomOutputFn,
 } from './types';
 import { ELogTopic, ELogLevel } from './enums';
 
@@ -12,7 +12,7 @@ export class LoggingService extends AbstractService<LoggingServiceConfiguration>
   implements ILoggingService {
   private useColor: boolean;
   private config: LoggingServiceConfiguration;
-  private outputs: { [key: string]: FLoggerCustomOutputFunction } = {};
+  private outputs: { [key: string]: LoggerCustomOutputFn } = {};
 
   constructor() {
     super(EServiceName.LoggingService, 'GenericLoggingService');
@@ -30,7 +30,7 @@ export class LoggingService extends AbstractService<LoggingServiceConfiguration>
 
   public usingColor = () => this.useColor;
 
-  public addOutput(name: string, output: FLoggerCustomOutputFunction) {
+  public addOutput(name: string, output: LoggerCustomOutputFn) {
     this.outputs[name] = output;
   }
 
@@ -56,7 +56,7 @@ export class LoggingService extends AbstractService<LoggingServiceConfiguration>
           }
           // Send log messages to all outputs
           for (const output of (Object as any).values(this.outputs)) {
-            (output as FLoggerCustomOutputFunction)(
+            (output as LoggerCustomOutputFn)(
               this.config,
               topic,
               level,

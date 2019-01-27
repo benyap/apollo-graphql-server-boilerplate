@@ -2,12 +2,9 @@ import moment from 'moment-timezone';
 
 import { ELogTopic, ELogLevel } from './enums';
 import { wrapLevelTag, wrapTopicTag, colorize } from './utils';
-import {
-  FLoggerCustomOutputFunction,
-  LoggingServiceConfiguration,
-} from './types';
+import { LoggerCustomOutputFn, LoggingServiceConfiguration } from './types';
 
-const createDefaultLogger: () => FLoggerCustomOutputFunction = () => (
+const createDefaultLogger: () => LoggerCustomOutputFn = () => (
   config: LoggingServiceConfiguration,
   topic: ELogTopic,
   level: ELogLevel,

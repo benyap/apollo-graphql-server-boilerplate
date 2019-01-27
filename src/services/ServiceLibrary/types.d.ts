@@ -1,10 +1,10 @@
 import { IService } from '../service/types';
 
-import { FLoggerLevelOutputFunction } from '../LoggingService';
+import { LoggerLevelOutputFn } from '../LoggingService';
 import { EServiceName } from '../service/enums';
 
 export interface ServiceLibraryConfiguration {
-  log?: FLoggerLevelOutputFunction;
+  log?: LoggerLevelOutputFn;
 }
 
 export interface IServiceLibrary extends IService<ServiceLibraryConfiguration> {

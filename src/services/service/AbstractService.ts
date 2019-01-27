@@ -1,13 +1,13 @@
 import { IService } from './types';
 import { EServiceName } from './enums';
-import { FLoggerLevelOutputFunction } from '../LoggingService';
+import { LoggerLevelOutputFn } from '../LoggingService';
 
 export abstract class AbstractService<T> implements IService<T> {
   public static GET_LIMIT = 100;
 
   protected serviceName: EServiceName;
   protected implementationName: string;
-  protected log: FLoggerLevelOutputFunction;
+  protected log: LoggerLevelOutputFn;
 
   constructor(serviceName: EServiceName, implementationName: string) {
     this.serviceName = serviceName;

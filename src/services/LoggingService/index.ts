@@ -3,7 +3,7 @@ import { ELogTopic, ELogLevel } from './enums';
 import {
   ILoggingService,
   LoggingServiceConfiguration,
-  FLoggerLevelOutputFunction,
+  LoggerLevelOutputFn,
 } from './types';
 
 async function createLoggingService(
@@ -21,7 +21,7 @@ export { createDefaultLogger } from './loggers';
 export {
   ILoggingService,
   LoggingServiceConfiguration,
-  FLoggerLevelOutputFunction,
+  LoggerLevelOutputFn,
   ELogLevel,
   ELogTopic,
   LoggingService,
