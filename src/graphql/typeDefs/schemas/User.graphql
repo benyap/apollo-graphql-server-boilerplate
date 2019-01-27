@@ -1,0 +1,38 @@
+"""
+A User
+"""
+type User {
+  _id: ID
+  firstname: String @log
+  lastname: String @log
+  friends: [User]
+}
+
+"""
+Input parameters to create a new user
+"""
+input UserInput {
+  firstname: String
+  lastname: String
+}
+
+extend type Query {
+  # Get a user by their id
+  user(id: ID!): User
+
+  # Get a list of users
+  users(limit: Int): [User]
+}
+
+extend type Mutation {
+  # Add a new user
+  addUser(user: UserInput!): User
+
+  # Remove a user
+  deleteUser(id: ID!): [User]
+}
+
+extend type Subscription {
+  # Be notified when a new user is created
+  newUser: User
+}

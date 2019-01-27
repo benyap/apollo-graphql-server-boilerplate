@@ -28,6 +28,7 @@ export class InMemoryServiceLibrary
     }`;
     this.services[key] = service;
     this.log(ELogLevel.SILLY)(`Added service: ${key}`);
+    return key;
   }
 
   public removeService(serviceName: EServiceName, identifier: string = '') {

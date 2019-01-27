@@ -5,6 +5,12 @@ import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
 import enforce from 'express-sslify';
+import { parse } from 'graphql';
+import { collectFields } from '../graphql/utils/graphqlOperationUtils';
+
+import { ApolloServer, Config } from 'apollo-server-express';
+
+import generateGraphQLDefinitions from '../graphql';
 
 import configureEnvironment from '../environment/configureEnvironment';
 
@@ -82,6 +88,48 @@ export class Server {
     const LOCAL = process.env.NODE_ENV === 'local';
 
     // =======================
+    //  GraphQL configuration
+    // =======================
+
+    const contextCreator: IContextCreatorService = this.serviceLibrary.getService<
+      IContextCreatorService
+    >(EServiceName.ContextCreatorService);
+
+    // Apollo server configuration
+    const apolloServerOptions: Config = {
+      ...generateGraphQLDefinitions(process.env.NODE_ENV),
+      introspection: !PRODUCTION,
+      playground: !PRODUCTION,
+      engine: {
+        apiKey: process.env.ENGINE_API_KEY,
+      },
+      context: async ({ req, connection }) => {
+        if (connection) return connection.context;
+        else {
+          const query = parse(req.body.query).definitions[0];
+          const fields = collectFields(query as any);
+          return contextCreator.createContext(
+            req.headers.authorization,
+            fields,
+          );
+        }
+      },
+      subscriptions: {
+        onConnect: async (connectionParams, webSocket) => {
+          // TODO: investigate if there are any fields to look for here,
+          // otherwise no services will be given by context creator for
+          // subscriptions on connect.
+          return contextCreator.createContext(
+            (connectionParams as any).authorization,
+          );
+        },
+      },
+    };
+
+    // Create Apollo server with GraphQL typeDefs and resolvers
+    const apollo = new ApolloServer(apolloServerOptions);
+
+    // =======================
     //  Express configuration
     // =======================
 
@@ -113,6 +161,9 @@ export class Server {
 
     // Serve static files from public folder
     app.use(express.static('public'));
+
+    // Apply middleware GraphQL server
+    apollo.applyMiddleware({ app });
 
     // Configure Express app
     app.use(cors({ origin: allowedOrigins }));
@@ -151,6 +202,9 @@ export class Server {
     } else {
       this.server = app;
     }
+
+    // Add GraphQL subscription capability
+    apollo.installSubscriptionHandlers(this.server);
 
     this.log(ELogLevel.DEBUG)(`Server configuration complete.`);
   }

@@ -13,12 +13,18 @@ import {
   GraphQLContext,
 } from './types';
 
+import { ExampleService } from '../../example/service';
+import { IExampleService } from '../../example/types';
+
 export class ContextCreatorService
   extends AbstractService<ContextCreatorServiceConfiguration>
   implements IContextCreatorService {
   private serverConfig: ServerConfiguration;
   private authenticationService: IAuthenticationService;
   private serviceLibrary: IServiceLibrary;
+
+  // FIXME: DEMO ONLY: example service
+  private exampleService: IExampleService = new ExampleService();
 
   constructor() {
     super(EServiceName.ContextCreatorService, 'ContextCreatorService');
@@ -59,6 +65,10 @@ export class ContextCreatorService
       const serviceLibrary = new ServiceLibrary();
       await serviceLibrary.init({});
       this.log(ELogLevel.WARN)(`Service injection logic not implemented`);
+
+      // FIXME: DEMO ONLY: example service
+      this.log(ELogLevel.INFO)(`Injecting example service.`);
+      serviceLibrary.addService(this.exampleService);
 
       // Construct context
       const context: GraphQLContext = {

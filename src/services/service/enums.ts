@@ -6,4 +6,6 @@ export enum EServiceName {
   CacheService            = 'CacheService',
   AuthenticationService   = 'AuthenticationService',
   ContextCreatorService   = 'ContextCreatorService',
+  // FIXME: DEMO ONLY: Remove this service
+  ExampleService          = 'ExampleService',
 }
