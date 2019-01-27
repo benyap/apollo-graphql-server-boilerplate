@@ -10,8 +10,10 @@ export enum ELogLevel {
 
 // prettier-ignore
 export enum ELogTopic {
-  SERVER         = 'main',
-  ENVIRONMENT    = 'env',
-  SERVICE        = 'srvc',
-  NETWORK        = 'net',
+  SERVER          = 'main',
+  ENVIRONMENT     = 'env',
+  SERVICE         = 'srvc',
+  NETWORK         = 'net',
+  AUTHENTICATION  = 'auth',
+  CONTEXTCREATOR  = 'ctxc',
 }

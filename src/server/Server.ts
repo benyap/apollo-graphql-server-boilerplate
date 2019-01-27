@@ -9,6 +9,7 @@ import enforce from 'express-sslify';
 import configureEnvironment from '../environment/configureEnvironment';
 
 import { ServerConfiguration } from './types';
+import { EServiceName } from '../services/service/enums';
 import createLoggingService, {
   LoggerLevelOutputFn,
   LoggingService,
@@ -16,8 +17,9 @@ import createLoggingService, {
   createDefaultLogger,
   ELogTopic,
 } from '../services/LoggingService';
-
 import ServiceLibrary, { IServiceLibrary } from '../services/ServiceLibrary';
+import { IContextCreatorService } from '../services/ContextCreatorService';
+
 import initialiseBasicServices from './basicServices';
 
 export class Server {
@@ -57,7 +59,7 @@ export class Server {
     });
     this.serviceLibrary = serviceLibrary;
 
-    // Initialise services
+    // Initialise basic services
     this.log(ELogLevel.SILLY)(`Initalising services...`);
     await initialiseBasicServices(
       this.config,
@@ -65,7 +67,7 @@ export class Server {
       this.serviceLibrary,
     );
 
-    // TODO: add more services to be initialised here
+    // TODO: add more services to be initialised here if required
 
     this.log(ELogLevel.DEBUG)(`Services initialised.`);
   }
@@ -109,6 +111,9 @@ export class Server {
     // Set `trustProtoHeader` for Heroku. See https://www.npmjs.com/package/express-sslify
     if (!LOCAL) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
+    // Serve static files from public folder
+    app.use(express.static('public'));
+
     // Configure Express app
     app.use(cors({ origin: allowedOrigins }));
     app.disable('x-powered-by');
@@ -146,6 +151,8 @@ export class Server {
     } else {
       this.server = app;
     }
+
+    this.log(ELogLevel.DEBUG)(`Server configuration complete.`);
   }
 
   /**

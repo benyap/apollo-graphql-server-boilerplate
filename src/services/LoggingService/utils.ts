@@ -31,10 +31,12 @@ const colorize = (useColor: boolean, tag: string) => (message: string) => {
     case ELogLevel.FATAL:         return chalk.bgRed.white(message);
 
     // Log topics
-    case ELogTopic.SERVER:        return chalk.inverse.white(message);
-    case ELogTopic.ENVIRONMENT:   return chalk.inverse.gray(message);
-    case ELogTopic.NETWORK:       return chalk.inverse.blue(message);
-    case ELogTopic.SERVICE:       return chalk.inverse.gray(message);
+    case ELogTopic.SERVER:          return chalk.inverse.white(message);
+    case ELogTopic.ENVIRONMENT:     return chalk.inverse.gray(message);
+    case ELogTopic.NETWORK:         return chalk.inverse.blue(message);
+    case ELogTopic.SERVICE:
+    case ELogTopic.CONTEXTCREATOR:  return chalk.inverse.gray(message);
+    case ELogTopic.AUTHENTICATION:  return chalk.inverse.red(message);
 
     default:                      return message;
   }

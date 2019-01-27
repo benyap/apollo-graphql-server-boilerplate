@@ -9,24 +9,31 @@ import { LoggingService } from '../../../src/services/LoggingService';
 import { RecordNotFoundError } from '../../../src/services/CacheService/errors/RecordNotFoundError';
 
 describe('InMemoryCacheService', () => {
-  it('uses the given logger', async () => {
-    const cache = new InMemoryCacheService();
-    const loggerSpy = sinon.spy();
-    await cache.init({
-      cacheName: 'mycache',
-      log: () => loggerSpy,
+  describe('constructor', () => {
+    it('creates a cache service', () => {
+      const cache = new InMemoryCacheService();
+      expect(cache.getServiceName()).toEqual(EServiceName.CacheService);
+      expect(cache.getImplementationName()).toEqual('InMemoryCacheService');
     });
-    expect(loggerSpy.calledOnce).toBe(true);
-  });
-  it('uses the default logger when not given one', async () => {
-    const cache = new InMemoryCacheService();
-    const loggerSpy = sinon.spy();
-    sinon.stub(LoggingService, 'void').callsFake(() => loggerSpy);
-    await cache.init({ cacheName: 'mycache' });
-    expect(loggerSpy.calledOnce).toBe(true);
+    it('uses the given logger', async () => {
+      const cache = new InMemoryCacheService();
+      const loggerSpy = sinon.spy();
+      await cache.init({
+        cacheName: 'mycache',
+        log: () => loggerSpy,
+      });
+      expect(loggerSpy.calledOnce).toBe(true);
+    });
+    it('uses the default logger when not given one', async () => {
+      const cache = new InMemoryCacheService();
+      const loggerSpy = sinon.spy();
+      sinon.stub(LoggingService, 'void').callsFake(() => loggerSpy);
+      await cache.init({ cacheName: 'mycache' });
+      expect(loggerSpy.calledOnce).toBe(true);
+    });
   });
 
-  describe('InMemoryCacheService methods', () => {
+  describe('methods', () => {
     const CACHE_NAME = 'mycache';
     let cache: ICacheService<string>;
 
@@ -40,12 +47,6 @@ describe('InMemoryCacheService', () => {
     describe('constructor', () => {
       it('creates a cache with the right name', () => {
         expect(cache.getCacheName()).toEqual(CACHE_NAME);
-      });
-      it('creates a cache with the right service name', () => {
-        expect(cache.getServiceName()).toEqual(EServiceName.CacheService);
-      });
-      it('creates a cache with the right implementation name', () => {
-        expect(cache.getImplementationName()).toEqual('InMemoryCacheService');
       });
     });
 

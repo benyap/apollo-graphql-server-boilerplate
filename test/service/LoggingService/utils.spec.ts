@@ -74,6 +74,16 @@ describe('LoggingService utils', () => {
           chalk.inverse.gray('message'),
         );
       });
+      it('returns the proper color for ELogTopic.CONTEXTCREATOR', () => {
+        expect(testLevel(ELogTopic.CONTEXTCREATOR)).toEqual(
+          chalk.inverse.gray('message'),
+        );
+      });
+      it('returns the proper color for ELogTopic.AUTHENTICATION', () => {
+        expect(testLevel(ELogTopic.AUTHENTICATION)).toEqual(
+          chalk.inverse.red('message'),
+        );
+      });
     });
   });
 

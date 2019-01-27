@@ -4,4 +4,6 @@ export enum EServiceName {
   LoggingService          = 'LoggingService',
   NetworkService          = 'NetworkService',
   CacheService            = 'CacheService',
+  AuthenticationService   = 'AuthenticationService',
+  ContextCreatorService   = 'ContextCreatorService',
 }

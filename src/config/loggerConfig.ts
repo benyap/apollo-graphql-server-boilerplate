@@ -15,10 +15,12 @@ const loggerConfig: LoggingServiceConfiguration = {
     ELogLevel.FATAL,
   ],
   showLogTopics: [
-    ELogTopic.SERVICE,
     ELogTopic.SERVER,
     ELogTopic.ENVIRONMENT,
+    ELogTopic.SERVICE,
     ELogTopic.NETWORK,
+    ELogTopic.AUTHENTICATION,
+    ELogTopic.CONTEXTCREATOR,
   ],
 };
 
