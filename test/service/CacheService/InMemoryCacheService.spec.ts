@@ -18,7 +18,6 @@ describe('InMemoryCacheService', () => {
     });
     expect(loggerSpy.calledOnce).toBe(true);
   });
-
   it('uses the default logger when not given one', async () => {
     const cache = new InMemoryCacheService();
     const loggerSpy = sinon.spy();

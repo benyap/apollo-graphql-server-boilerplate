@@ -1,2 +1,6 @@
+import { InMemoryServiceLibrary } from './InMemoryServiceLibrary';
+
+export default InMemoryServiceLibrary;
+
 export { IServiceLibrary } from './types';
-export { ServiceLibrary } from './ServiceLibrary';
+export { InMemoryServiceLibrary } from './InMemoryServiceLibrary';

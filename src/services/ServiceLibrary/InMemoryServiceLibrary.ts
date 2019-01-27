@@ -7,17 +7,19 @@ import { ELogLevel, LoggingService } from '../LoggingService';
 import { ServiceUnavailableError } from './errors/ServiceUnavailableError';
 import { IServiceLibrary, ServiceLibraryConfiguration } from './types';
 
-export class ServiceLibrary extends AbstractService<ServiceLibraryConfiguration>
+export class InMemoryServiceLibrary
+  extends AbstractService<ServiceLibraryConfiguration>
   implements IServiceLibrary {
   private services: { [key: string]: IService<object> };
 
   constructor() {
-    super(EServiceName.ServiceLibrary, 'ServiceLibrary');
+    super(EServiceName.ServiceLibrary, 'InMemoryServiceLibrary');
   }
 
   public async init(config: ServiceLibraryConfiguration) {
     this.services = {};
     this.log = config.log || LoggingService.void;
+    this.log(ELogLevel.DEBUG)(`Service library initialised.`);
   }
 
   public addService(service: IService<object>, identifier: string = '') {
