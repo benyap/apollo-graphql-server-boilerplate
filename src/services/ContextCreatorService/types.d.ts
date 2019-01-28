@@ -5,6 +5,7 @@ import { IAuthenticationService } from '../AuthenticationService';
 import { AuthenticationResult } from '../AuthenticationService/types';
 import { IServiceLibrary } from '../ServiceLibrary';
 import { ServerConfiguration } from '../../server/types';
+import { ServerDiagnostics } from '../../graphql/typeDefs/models/ServerDiagnostics';
 
 export interface ContextCreatorServiceConfiguration {
   serverConfig: ServerConfiguration;
@@ -14,13 +15,10 @@ export interface ContextCreatorServiceConfiguration {
 }
 
 export interface GraphQLContext extends AuthenticationResult {
-  serviceLibrary: IServiceLibrary;
-  dataLoaders: {};
-  diagnostics: {
-    environment: ServerEnvironment;
-    version: string;
-    startDate: Date;
-  };
+  // Service library containing services available in this request
+  lib: IServiceLibrary;
+  // Server diagnostics info
+  diagnostics: ServerDiagnostics;
 }
 
 export interface IContextCreatorService

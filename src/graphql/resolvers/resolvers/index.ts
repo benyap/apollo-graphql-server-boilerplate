@@ -13,10 +13,12 @@ import { Subscription } from './Subscription';
 
 // Custom types
 import { User } from './User';
+import { ServerDiagnostics } from './ServerDiagnostics';
 
 export const resolvers: Resolvers = {
   Query,
   User,
   Mutation,
+  ServerDiagnostics,
   Subscription,
 };

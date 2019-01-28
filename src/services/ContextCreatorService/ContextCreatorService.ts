@@ -73,9 +73,7 @@ export class ContextCreatorService
       // Construct context
       const context: GraphQLContext = {
         ...authenticationResult,
-        serviceLibrary,
-        // TODO: implement data loaders
-        dataLoaders: {},
+        lib: serviceLibrary,
         diagnostics: {
           environment: process.env.NODE_ENV as ServerEnvironment,
           version: this.serverConfig.version,

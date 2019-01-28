@@ -8,9 +8,9 @@ import { pubSub, SubscriptionTopic } from '../../pubsub';
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
   addUser: (parent, args, ctx) => {
-    const example: IExampleService = ctx.serviceLibrary.getService<
-      IExampleService
-    >(EServiceName.ExampleService);
+    const example: IExampleService = ctx.lib.getService<IExampleService>(
+      EServiceName.ExampleService,
+    );
     const newUser = example.addUser(args.user);
     pubSub
       .publish(SubscriptionTopic.EXAMPLE, { newUser })
@@ -19,9 +19,9 @@ export const Mutation: MutationResolvers.Type = {
     return newUser;
   },
   deleteUser: (parent, args, ctx) => {
-    const example: IExampleService = ctx.serviceLibrary.getService<
-      IExampleService
-    >(EServiceName.ExampleService);
+    const example: IExampleService = ctx.lib.getService<IExampleService>(
+      EServiceName.ExampleService,
+    );
     example.deleteUser(args.id);
     return example.getUsers();
   },

@@ -22,6 +22,9 @@ extend type Query {
 
   # Get a list of users
   users(limit: Int): [User]
+
+  # Example expensive operation on users
+  expensiveUsers: [User]
 }
 
 extend type Mutation {

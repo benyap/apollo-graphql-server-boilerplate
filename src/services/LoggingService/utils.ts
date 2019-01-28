@@ -37,6 +37,7 @@ const colorize = (useColor: boolean, tag: string) => (message: string) => {
     case ELogTopic.SERVICE:
     case ELogTopic.CONTEXTCREATOR:  return chalk.inverse.gray(message);
     case ELogTopic.AUTHENTICATION:  return chalk.inverse.red(message);
+    case ELogTopic.GRAPHQLCOST:     return chalk.inverse.magenta(message);
 
     default:                      return message;
   }

@@ -53,7 +53,8 @@ const mergeRootFields = (schema: string) => {
     // Match all fields inside `extend type TYPE` blocks
     const matches = schema.match(
       new RegExp(
-        `(?<=extend type ${type} {\\n)((?: |\\w|:|\\n|\\(|\\)|\\[|\\]|!|#|,)*)`,
+        `(?<=extend type ${type} {\\n)` +
+          `((?: |\\w|:|\\n|\\(|\\)|\\[|\\]|!|#|\\.|,|-|:|\`|'|"|@|<|>||\\/)*)`,
         'g',
       ),
     );
@@ -62,7 +63,9 @@ const mergeRootFields = (schema: string) => {
       // Remove all `extend type TYPE` blocks
       schemaResult = schemaResult.replace(
         new RegExp(
-          `(extend type ${type} {\\n(?: |\\w|:|\\n|\\(|\\)|\\[|\\]|!|#|,)*}\\n\\n)`,
+          `(extend type ${type} {\\n` +
+            `((?: |\\w|:|\\n|\\(|\\)|\\[|\\]|!|#|\\.|,|-|:|\`|'|"|@|<|>||\\/)*)` +
+            `}\\n\\n)`,
           'g',
         ),
         '',
@@ -71,7 +74,9 @@ const mergeRootFields = (schema: string) => {
       // Push fields inside `extend type TYPE` blocks into the root Query block
       schemaResult = schemaResult.replace(
         new RegExp(
-          `(?<!extend )(type ${type} {\\n)((?: |\\w|:|\\n|\\(|\\)|\\[|\\]|!|#)*)(\\n)(}\\n)`,
+          `(?<!extend )(type ${type} {\\n)` +
+            `((?: |\\w|:|\\n|\\(|\\)|\\[|\\]|!|#|\\.|,|-|:|\`|'|"|@|<|>||\\/)*)` +
+            `(\\n)(}\\n)`,
           'g',
         ),
         `$1$2$3\n${matches.join('\n')}$4`,

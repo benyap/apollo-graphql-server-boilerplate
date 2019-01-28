@@ -11,6 +11,7 @@ import { collectFields } from '../graphql/utils/graphqlOperationUtils';
 import { ApolloServer, Config } from 'apollo-server-express';
 
 import generateGraphQLDefinitions from '../graphql';
+import createCostAnalyzer from '../graphql/cost';
 
 import configureEnvironment from '../environment/configureEnvironment';
 
@@ -95,6 +96,10 @@ export class Server {
       IContextCreatorService
     >(EServiceName.ContextCreatorService);
 
+    const loggingService = this.serviceLibrary.getService<LoggingService>(
+      EServiceName.LoggingService,
+    );
+
     // Apollo server configuration
     const apolloServerOptions: Config = {
       ...generateGraphQLDefinitions(process.env.NODE_ENV),
@@ -124,6 +129,11 @@ export class Server {
           );
         },
       },
+      validationRules: [
+        // Cost analysis: blocks queries that are too expensive
+        // https://github.com/pa-bru/graphql-cost-analysis
+        createCostAnalyzer(loggingService.createLogger(ELogTopic.GRAPHQLCOST)),
+      ],
     };
 
     // Create Apollo server with GraphQL typeDefs and resolvers

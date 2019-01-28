@@ -9,6 +9,7 @@ models:
   # Add model definitions here
   files:
     - ./src/graphql/typeDefs/models/User.d.ts
+    - ./src/graphql/typeDefs/models/ServerDiagnostics.d.ts
 
 output: ./src/graphql/types.ts
 

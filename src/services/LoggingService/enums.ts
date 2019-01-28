@@ -16,4 +16,5 @@ export enum ELogTopic {
   NETWORK         = 'net',
   AUTHENTICATION  = 'auth',
   CONTEXTCREATOR  = 'ctxc',
+  GRAPHQLCOST     = 'cost',
 }

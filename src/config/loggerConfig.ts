@@ -21,6 +21,7 @@ const loggerConfig: LoggingServiceConfiguration = {
     ELogTopic.NETWORK,
     ELogTopic.AUTHENTICATION,
     ELogTopic.CONTEXTCREATOR,
+    ELogTopic.GRAPHQLCOST,
   ],
 };
 

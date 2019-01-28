@@ -9,9 +9,9 @@ export const User: UserResolvers.Type = {
   ...UserResolvers.defaultResolvers,
 
   friends: (parent, args, ctx) => {
-    const example: IExampleService = ctx.serviceLibrary.getService<
-      IExampleService
-    >(EServiceName.ExampleService);
+    const example: IExampleService = ctx.lib.getService<IExampleService>(
+      EServiceName.ExampleService,
+    );
     const friends: UserModel[] = parent.friendIds.map(u => example.getUser(u));
     return friends;
   },
