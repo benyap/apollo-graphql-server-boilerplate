@@ -39,6 +39,19 @@ export class ExampleService
     this.loader = new DataLoader<string, User>(this.batchLoadUsers);
   };
 
+  public getUser = async (id: string) => {
+    this.log(ELogLevel.SILLY)(`Getting user ${id}`);
+    await delay(200);
+    return this.users.filter(u => u._id === id)[0];
+  };
+
+  public getUsers = async (limit?: number) => {
+    this.log(ELogLevel.SILLY)(`Getting users (bulk)`);
+    await delay(200);
+    if (limit === undefined) return this.users;
+    return this.users.slice(0, limit);
+  };
+
   public loadUser = (id: string) => {
     return this.loader.load(id);
   };
@@ -68,13 +81,6 @@ export class ExampleService
     await delay(200);
     if (removeIndex > -1) this.users.splice(removeIndex, 1);
     return this.users;
-  };
-
-  public getUsers = async (limit?: number) => {
-    this.log(ELogLevel.SILLY)(`Getting users (bulk)`);
-    await delay(200);
-    if (limit === undefined) return this.users;
-    return this.users.slice(0, limit);
   };
 
   private batchLoadUsers = async (ids: string[]) => {
