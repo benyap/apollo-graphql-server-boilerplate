@@ -6,7 +6,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "esnext.asynciterable", "dom"],
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es6", "esnext.asynciterable"],
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"]

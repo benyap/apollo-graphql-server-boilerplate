@@ -1,0 +1,22 @@
+"""
+SCALARS
+
+The following scalar types have been predefined by external pacakges.
+"""
+scalar Email
+scalar Phone
+scalar URL
+scalar PositiveInt
+scalar PositiveFloat
+scalar NegativeInt
+scalar NegativeFloat
+scalar NonNegativeInt
+scalar NonNegativeFloat
+scalar NonPositiveInt
+scalar NonPositiveFloat
+
+scalar Date
+scalar Time
+scalar DateTime
+
+scalar JSON

@@ -1,9 +1,9 @@
 import { LoggingService } from './LoggingService';
-import { ELogTopic, ELogLevel } from './enums';
+import { LogTopic, LogLevel } from './enums';
 import {
   ILoggingService,
   LoggingServiceConfiguration,
-  FLoggerLevelOutputFunction,
+  LoggerLevelOutputFn,
 } from './types';
 
 async function createLoggingService(
@@ -21,8 +21,8 @@ export { createDefaultLogger } from './loggers';
 export {
   ILoggingService,
   LoggingServiceConfiguration,
-  FLoggerLevelOutputFunction,
-  ELogLevel,
-  ELogTopic,
+  LoggerLevelOutputFn,
+  LogLevel,
+  LogTopic,
   LoggingService,
 };

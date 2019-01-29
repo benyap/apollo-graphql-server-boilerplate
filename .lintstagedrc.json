@@ -3,5 +3,5 @@
     "*.ts": ["yarn lint:tslint:fix", "prettier --write", "git add --force"],
     "*.json": ["prettier --write", "git add --force"]
   },
-  "ignore": ["test/**"]
+  "ignore": ["test/**", "internals/**"]
 }

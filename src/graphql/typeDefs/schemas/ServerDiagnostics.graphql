@@ -1,0 +1,33 @@
+"""
+The environment the server is currently in.
+"""
+enum ServerEnvironment {
+  production
+  qat
+  development
+  local
+}
+
+"""
+The version of the server (in SemVer format).
+"""
+scalar ServerVersion
+
+"""
+Server diagnostic information.
+"""
+type ServerDiagnostics {
+  # The environment the server is in.
+  # environment: ServerEnvironment!
+
+  # The current version of the server.
+  version: ServerVersion!
+
+  # The date the server was started.
+  startDate: DateTime!
+}
+
+extend type Query {
+  # Get server diagnostic information.
+  serverDiagnostics: ServerDiagnostics!
+}

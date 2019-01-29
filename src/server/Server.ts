@@ -5,24 +5,34 @@ import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
 import enforce from 'express-sslify';
+import { parse } from 'graphql';
+import { collectFields } from '../graphql/utils/graphqlOperationUtils';
+import { EnhancedApolloServer } from './EnhancedApolloServer';
+
+import { Config } from 'apollo-server-express';
+
+import generateGraphQLDefinitions from '../graphql';
+import createCostAnalyzerOptions from '../graphql/cost';
 
 import configureEnvironment from '../environment/configureEnvironment';
 
 import { ServerConfiguration } from './types';
+import { EServiceName } from '../services/service/enums';
 import createLoggingService, {
-  FLoggerLevelOutputFunction,
+  LoggerLevelOutputFn,
   LoggingService,
-  ELogLevel,
+  LogLevel,
   createDefaultLogger,
-  ELogTopic,
+  LogTopic,
 } from '../services/LoggingService';
+import ServiceLibrary, { IServiceLibrary } from '../services/ServiceLibrary';
+import { IContextCreatorService } from '../services/ContextCreatorService';
 
-import { IServiceLibrary, ServiceLibrary } from '../services/ServiceLibrary';
 import initialiseBasicServices from './basicServices';
 
 export class Server {
   private config: ServerConfiguration;
-  private log: FLoggerLevelOutputFunction;
+  private log: LoggerLevelOutputFn;
   private serviceLibrary: IServiceLibrary;
 
   private server;
@@ -37,7 +47,7 @@ export class Server {
   /**
    * Initialise all services for the server.
    */
-  public async initialiseServices() {
+  public initialiseServices = async () => {
     // Configure environment
     await configureEnvironment();
 
@@ -48,36 +58,92 @@ export class Server {
       LOCAL,
     );
     loggingService.addOutput('console', createDefaultLogger());
-    this.log = loggingService.createLogger(ELogTopic.SERVER);
+    this.log = loggingService.createLogger(LogTopic.SERVER);
 
     // Initialise service library
     const serviceLibrary = new ServiceLibrary();
     await serviceLibrary.init({
-      log: loggingService.createLogger(ELogTopic.SERVICE),
+      log: loggingService.createLogger(LogTopic.SERVICE),
     });
     this.serviceLibrary = serviceLibrary;
 
-    // Initialise services
-    this.log(ELogLevel.SILLY)(`Initalising services...`);
+    // Initialise basic services
+    this.log(LogLevel.SILLY)(`Initalising services...`);
     await initialiseBasicServices(
       this.config,
       loggingService,
       this.serviceLibrary,
     );
 
-    // TODO: add more services to be initialised here
+    // TODO: add more services to be initialised here if required
 
-    this.log(ELogLevel.DEBUG)(`Services initialised.`);
-  }
+    this.log(LogLevel.DEBUG)(`Services initialised.`);
+  };
 
   /**
    * Configure the server with services and settings so that it is ready to start.
    */
-  public async configureServer() {
-    this.log(ELogLevel.SILLY)(`Configuring server...`);
+  public configureServer = async () => {
+    this.log(LogLevel.SILLY)(`Configuring server...`);
     const CERT_NAME = 'localhost';
     const PRODUCTION = process.env.NODE_ENV === 'production';
     const LOCAL = process.env.NODE_ENV === 'local';
+
+    // =======================
+    //  GraphQL configuration
+    // =======================
+
+    const contextCreator: IContextCreatorService = this.serviceLibrary.getService<
+      IContextCreatorService
+    >(EServiceName.ContextCreatorService);
+
+    const loggingService = this.serviceLibrary.getService<LoggingService>(
+      EServiceName.LoggingService,
+    );
+
+    // Apollo server configuration
+    const apolloServerOptions: Config = {
+      ...generateGraphQLDefinitions(process.env.NODE_ENV),
+      introspection: !PRODUCTION,
+      playground: !PRODUCTION,
+      engine: {
+        apiKey: process.env.ENGINE_API_KEY,
+      },
+      context: async ({ req, connection }) => {
+        if (connection) return connection.context;
+        else {
+          const query = parse(req.body.query).definitions[0];
+          const fields = collectFields(query as any);
+          return contextCreator.createContext(
+            req.headers.authorization,
+            fields,
+          );
+        }
+      },
+      subscriptions: {
+        onConnect: async (connectionParams, webSocket) => {
+          // TODO: investigate if there are any fields to look for here,
+          // otherwise no services will be given by context creator for
+          // subscriptions on connect.
+          return contextCreator.createContext(
+            (connectionParams as any).authorization,
+          );
+        },
+      },
+    };
+
+    /**
+     * FIXME: using the EnhancedApolloServer because it provides
+     * a custom extension that provides a workaround for a plugin
+     * issue with graphql-cost-anlysis.
+     */
+    // Create Apollo server with GraphQL typeDefs and resolvers
+    const apollo = new EnhancedApolloServer(
+      apolloServerOptions,
+      createCostAnalyzerOptions(
+        loggingService.createLogger(LogTopic.GRAPHQLCOST),
+      ),
+    );
 
     // =======================
     //  Express configuration
@@ -109,6 +175,12 @@ export class Server {
     // Set `trustProtoHeader` for Heroku. See https://www.npmjs.com/package/express-sslify
     if (!LOCAL) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
+    // Serve static files from public folder
+    app.use(express.static('public'));
+
+    // Apply middleware GraphQL server
+    apollo.applyMiddleware({ app });
+
     // Configure Express app
     app.use(cors({ origin: allowedOrigins }));
     app.disable('x-powered-by');
@@ -118,7 +190,7 @@ export class Server {
         ':method :url HTTP/:http-version - :status :response-time ms :res[content-length]',
         {
           stream: {
-            write: msg => this.log(ELogLevel.DEBUG)(msg.replace('\n', '')),
+            write: msg => this.log(LogLevel.DEBUG)(msg.replace('\n', '')),
           },
         },
       ),
@@ -142,37 +214,42 @@ export class Server {
       );
       this.useSSL = true;
       this.portConfig = { port: 443 };
-      this.log(ELogLevel.SILLY)(`Local server configured with custom SSL.`);
+      this.log(LogLevel.SILLY)(`Local server configured with custom SSL.`);
     } else {
       this.server = app;
     }
-  }
+
+    // Add GraphQL subscription capability
+    apollo.installSubscriptionHandlers(this.server);
+
+    this.log(LogLevel.DEBUG)(`Server configuration complete.`);
+  };
 
   /**
    * Start the server.
    * Remember to use `initaliseServices()` and `configureServer()` first.
    */
-  public start() {
+  public start = () => {
     const LOCAL = process.env.NODE_ENV === 'local';
 
     this.server.listen(this.portConfig, () => {
-      this.log(ELogLevel.INFO)(
+      this.log(LogLevel.INFO)(
         `SERVER READY in ${process.env.NODE_ENV.toUpperCase()} environment (port=${
           this.portConfig.port
         })`,
       );
       if (LOCAL) {
         if (this.useSSL) {
-          this.log(ELogLevel.DEBUG)(`SERVER READY at https://localhost`);
+          this.log(LogLevel.DEBUG)(`SERVER READY at https://localhost`);
         } else {
-          this.log(ELogLevel.DEBUG)(
+          this.log(LogLevel.DEBUG)(
             `SERVER READY at http://localhost:${this.portConfig.port}`,
           );
-          this.log(ELogLevel.DEBUG)(
+          this.log(LogLevel.DEBUG)(
             `WARNING: Configure a HTTPS server for secure connections.`,
           );
         }
       }
     });
-  }
+  };
 }

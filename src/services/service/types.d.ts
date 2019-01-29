@@ -17,4 +17,12 @@ export interface IService<T> {
    * Initialise the service.
    */
   init(config: T): Promise<any>;
+
+  /**
+   * Let the service know that a new context was created.
+   * This hook can be used to perform any set up that is
+   * context specific, e.g. creating a new DataLoader
+   * instance.
+   */
+  newContext(): void;
 }

@@ -1,17 +1,18 @@
 import { IService } from '../service/types';
 
-import { FLoggerLevelOutputFunction } from '../LoggingService';
+import { LoggerLevelOutputFn } from '../LoggingService';
 import { EServiceName } from '../service/enums';
 
 export interface ServiceLibraryConfiguration {
-  log?: FLoggerLevelOutputFunction;
+  log?: LoggerLevelOutputFn;
 }
 
 export interface IServiceLibrary extends IService<ServiceLibraryConfiguration> {
   /**
    * Add a service to the service library.
+   * Returns the key that was used to store the service.
    */
-  addService(service: IService<object>, identifier?: string);
+  addService(service: IService<object>, identifier?: string): string;
 
   /**
    * Remove a service from the service library.
@@ -25,5 +26,10 @@ export interface IServiceLibrary extends IService<ServiceLibraryConfiguration> {
   getService<T extends IService<object>>(
     serviceName: EServiceName,
     identifier?: string,
-  );
+  ): T;
+
+  /**
+   * Get the `IService` interface for all services in the library.
+   */
+  getServices(): Array<IService<any>>;
 }
