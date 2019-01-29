@@ -1,4 +1,4 @@
-import { ELogTopic, ELogLevel } from '.';
+import { LogTopic, LogLevel } from '.';
 import { IService } from '../service/types';
 
 export interface LoggingServiceConfiguration {
@@ -10,11 +10,11 @@ export interface LoggingServiceConfiguration {
   /**
    * Whitelist of topics to output to the logger.
    */
-  showLogTopics: ELogTopic[];
+  showLogTopics: LogTopic[];
   /**
    * Whitelise of levels to output to the logger.
    */
-  showLogLevels: ELogLevel[];
+  showLogLevels: LogLevel[];
 }
 
 /**
@@ -22,8 +22,8 @@ export interface LoggingServiceConfiguration {
  */
 export type LoggerCustomOutputFn = (
   config: LoggingServiceConfiguration,
-  topic: ELogTopic,
-  level: ELogLevel,
+  topic: LogTopic,
+  level: LogLevel,
   msg: string | object,
   useColor?: boolean,
 ) => void;
@@ -36,7 +36,7 @@ export type LoggerOuptutFn = (msg: string | object) => void;
 /**
  * Logging output function that accepts a log level.
  */
-export type LoggerLevelOutputFn = (level: ELogLevel) => LoggerOuptutFn;
+export type LoggerLevelOutputFn = (level: LogLevel) => LoggerOuptutFn;
 
 export interface ILoggingService extends IService<LoggingServiceConfiguration> {
   /**
@@ -67,5 +67,5 @@ export interface ILoggingService extends IService<LoggingServiceConfiguration> {
    * @param topic the logger topic
    * @param useColor pass true to force the logger to use color (default uses setting passed in config)
    */
-  createLogger(topic: ELogTopic, useColor?: boolean): LoggerLevelOutputFn;
+  createLogger(topic: LogTopic, useColor?: boolean): LoggerLevelOutputFn;
 }

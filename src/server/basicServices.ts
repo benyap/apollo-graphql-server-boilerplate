@@ -1,4 +1,4 @@
-import { ELogTopic, ILoggingService } from '../services/LoggingService';
+import { LogTopic, ILoggingService } from '../services/LoggingService';
 import { IServiceLibrary } from '../services/ServiceLibrary';
 import createNetworkService from '../services/NetworkService';
 import AuthenticationService from '../services/AuthenticationService';
@@ -16,14 +16,14 @@ export default async (
 
   // Network service
   const networkService = await createNetworkService({
-    log: loggingService.createLogger(ELogTopic.NETWORK),
+    log: loggingService.createLogger(LogTopic.NETWORK),
   });
   serviceLibrary.addService(networkService);
 
   // Authentication service
   const authenticationService = new AuthenticationService();
   await authenticationService.init({
-    log: loggingService.createLogger(ELogTopic.AUTHENTICATION),
+    log: loggingService.createLogger(LogTopic.AUTHENTICATION),
   });
   serviceLibrary.addService(authenticationService);
 
@@ -33,7 +33,7 @@ export default async (
     serverConfig,
     authenticationService,
     serviceLibrary,
-    log: loggingService.createLogger(ELogTopic.CONTEXTCREATOR),
+    log: loggingService.createLogger(LogTopic.CONTEXTCREATOR),
   });
   serviceLibrary.addService(contextCreatorService);
 };

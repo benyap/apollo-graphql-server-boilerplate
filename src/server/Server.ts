@@ -20,9 +20,9 @@ import { EServiceName } from '../services/service/enums';
 import createLoggingService, {
   LoggerLevelOutputFn,
   LoggingService,
-  ELogLevel,
+  LogLevel,
   createDefaultLogger,
-  ELogTopic,
+  LogTopic,
 } from '../services/LoggingService';
 import ServiceLibrary, { IServiceLibrary } from '../services/ServiceLibrary';
 import { IContextCreatorService } from '../services/ContextCreatorService';
@@ -57,17 +57,17 @@ export class Server {
       LOCAL,
     );
     loggingService.addOutput('console', createDefaultLogger());
-    this.log = loggingService.createLogger(ELogTopic.SERVER);
+    this.log = loggingService.createLogger(LogTopic.SERVER);
 
     // Initialise service library
     const serviceLibrary = new ServiceLibrary();
     await serviceLibrary.init({
-      log: loggingService.createLogger(ELogTopic.SERVICE),
+      log: loggingService.createLogger(LogTopic.SERVICE),
     });
     this.serviceLibrary = serviceLibrary;
 
     // Initialise basic services
-    this.log(ELogLevel.SILLY)(`Initalising services...`);
+    this.log(LogLevel.SILLY)(`Initalising services...`);
     await initialiseBasicServices(
       this.config,
       loggingService,
@@ -76,14 +76,14 @@ export class Server {
 
     // TODO: add more services to be initialised here if required
 
-    this.log(ELogLevel.DEBUG)(`Services initialised.`);
+    this.log(LogLevel.DEBUG)(`Services initialised.`);
   };
 
   /**
    * Configure the server with services and settings so that it is ready to start.
    */
   public configureServer = async () => {
-    this.log(ELogLevel.SILLY)(`Configuring server...`);
+    this.log(LogLevel.SILLY)(`Configuring server...`);
     const CERT_NAME = 'localhost';
     const PRODUCTION = process.env.NODE_ENV === 'production';
     const LOCAL = process.env.NODE_ENV === 'local';
@@ -132,7 +132,7 @@ export class Server {
       validationRules: [
         // Cost analysis: blocks queries that are too expensive
         // https://github.com/pa-bru/graphql-cost-analysis
-        createCostAnalyzer(loggingService.createLogger(ELogTopic.GRAPHQLCOST)),
+        createCostAnalyzer(loggingService.createLogger(LogTopic.GRAPHQLCOST)),
       ],
     };
 
@@ -184,7 +184,7 @@ export class Server {
         ':method :url HTTP/:http-version - :status :response-time ms :res[content-length]',
         {
           stream: {
-            write: msg => this.log(ELogLevel.DEBUG)(msg.replace('\n', '')),
+            write: msg => this.log(LogLevel.DEBUG)(msg.replace('\n', '')),
           },
         },
       ),
@@ -208,7 +208,7 @@ export class Server {
       );
       this.useSSL = true;
       this.portConfig = { port: 443 };
-      this.log(ELogLevel.SILLY)(`Local server configured with custom SSL.`);
+      this.log(LogLevel.SILLY)(`Local server configured with custom SSL.`);
     } else {
       this.server = app;
     }
@@ -216,7 +216,7 @@ export class Server {
     // Add GraphQL subscription capability
     apollo.installSubscriptionHandlers(this.server);
 
-    this.log(ELogLevel.DEBUG)(`Server configuration complete.`);
+    this.log(LogLevel.DEBUG)(`Server configuration complete.`);
   };
 
   /**
@@ -227,19 +227,19 @@ export class Server {
     const LOCAL = process.env.NODE_ENV === 'local';
 
     this.server.listen(this.portConfig, () => {
-      this.log(ELogLevel.INFO)(
+      this.log(LogLevel.INFO)(
         `SERVER READY in ${process.env.NODE_ENV.toUpperCase()} environment (port=${
           this.portConfig.port
         })`,
       );
       if (LOCAL) {
         if (this.useSSL) {
-          this.log(ELogLevel.DEBUG)(`SERVER READY at https://localhost`);
+          this.log(LogLevel.DEBUG)(`SERVER READY at https://localhost`);
         } else {
-          this.log(ELogLevel.DEBUG)(
+          this.log(LogLevel.DEBUG)(
             `SERVER READY at http://localhost:${this.portConfig.port}`,
           );
-          this.log(ELogLevel.DEBUG)(
+          this.log(LogLevel.DEBUG)(
             `WARNING: Configure a HTTPS server for secure connections.`,
           );
         }

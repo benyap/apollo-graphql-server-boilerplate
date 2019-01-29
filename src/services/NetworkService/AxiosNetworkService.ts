@@ -3,7 +3,7 @@ import axios, { AxiosStatic } from 'axios';
 import { EServiceName } from '../service/enums';
 import { AbstractService } from '../service/AbstractService';
 
-import { ELogLevel, LoggingService } from '../LoggingService';
+import { LogLevel, LoggingService } from '../LoggingService';
 
 import {
   INetworkService,
@@ -25,14 +25,14 @@ export class AxiosNetworkService
   public init = async (config: NetworkServiceConfiguration) => {
     this.client = config.client || axios;
     this.log = config.log || LoggingService.void;
-    this.log(ELogLevel.DEBUG)(`Network service initialised.`);
+    this.log(LogLevel.DEBUG)(`Network service initialised.`);
   };
 
   public get = async <T>(options: GetRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
     if (options.params) requestOptions.params = options.params;
-    this.log(ELogLevel.SILLY)(`Sending GET to ${options.url}`);
+    this.log(LogLevel.SILLY)(`Sending GET to ${options.url}`);
     const result = await this.client.get<T>(options.url, requestOptions);
     return {
       data: result.data,
@@ -45,7 +45,7 @@ export class AxiosNetworkService
   public post = async <T>(options: PostRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
-    this.log(ELogLevel.SILLY)(`Sending POST to ${options.url}`);
+    this.log(LogLevel.SILLY)(`Sending POST to ${options.url}`);
     const result = await this.client.post<T>(
       options.url,
       options.body,
@@ -63,7 +63,7 @@ export class AxiosNetworkService
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
     if (options.params) requestOptions.params = options.params;
-    this.log(ELogLevel.SILLY)(`Sending DELETE to ${options.url}`);
+    this.log(LogLevel.SILLY)(`Sending DELETE to ${options.url}`);
     const result = await this.client.delete(options.url, requestOptions);
     return {
       data: result.data,

@@ -1,7 +1,7 @@
 import { LoggerLevelOutputFn } from '../LoggingService/types';
-import { ELogLevel } from '../LoggingService';
+import { LogLevel } from '../LoggingService';
 
 export const logAndThrow = (log: LoggerLevelOutputFn, error) => {
-  log(ELogLevel.ERROR)(error.message);
+  log(LogLevel.ERROR)(error.message);
   throw error;
 };

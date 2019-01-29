@@ -6,7 +6,7 @@ import {
   LoggingServiceConfiguration,
   LoggerCustomOutputFn,
 } from './types';
-import { ELogTopic, ELogLevel } from './enums';
+import { LogTopic, LogLevel } from './enums';
 
 export class LoggingService extends AbstractService<LoggingServiceConfiguration>
   implements ILoggingService {
@@ -41,9 +41,9 @@ export class LoggingService extends AbstractService<LoggingServiceConfiguration>
   public getOutputs = () => ({ ...this.outputs });
 
   public createLogger = (
-    topic: ELogTopic,
+    topic: LogTopic,
     useColor: boolean = this.useColor,
-  ) => (level: ELogLevel) => {
+  ) => (level: LogLevel) => {
     // Only log messages if topic needs to be shown.
     if (
       new Set(this.config.showLogTopics).has(topic) &&

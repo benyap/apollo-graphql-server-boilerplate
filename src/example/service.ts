@@ -7,7 +7,7 @@ import { EServiceName } from '../services/service/enums';
 import { users } from './data';
 import { UserInput, User } from '../graphql/typeDefs/models/User';
 import {
-  ELogLevel,
+  LogLevel,
   LoggerLevelOutputFn,
   LoggingService,
 } from '../services/LoggingService';
@@ -35,18 +35,18 @@ export class ExampleService
   };
 
   public newContext = () => {
-    this.log(ELogLevel.SILLY)(`Created new DataLoader`);
+    this.log(LogLevel.SILLY)(`Created new DataLoader`);
     this.loader = new DataLoader<string, User>(this.batchLoadUsers);
   };
 
   public getUser = async (id: string) => {
-    this.log(ELogLevel.SILLY)(`Getting user ${id}`);
+    this.log(LogLevel.SILLY)(`Getting user ${id}`);
     await delay(200);
     return this.users.filter(u => u._id === id)[0];
   };
 
   public getUsers = async (limit?: number) => {
-    this.log(ELogLevel.SILLY)(`Getting users (bulk)`);
+    this.log(LogLevel.SILLY)(`Getting users (bulk)`);
     await delay(200);
     if (limit === undefined) return this.users;
     return this.users.slice(0, limit);
@@ -66,7 +66,7 @@ export class ExampleService
       ...user,
       friendIds: [],
     };
-    this.log(ELogLevel.SILLY)(`Adding user`);
+    this.log(LogLevel.SILLY)(`Adding user`);
     await delay(200);
     this.users.push(newUser);
     return newUser;
@@ -77,7 +77,7 @@ export class ExampleService
     this.users.forEach((user, idx) => {
       if (user._id === id) removeIndex = idx;
     });
-    this.log(ELogLevel.SILLY)(`Deleting user ${id}`);
+    this.log(LogLevel.SILLY)(`Deleting user ${id}`);
     await delay(200);
     if (removeIndex > -1) this.users.splice(removeIndex, 1);
     return this.users;
@@ -95,7 +95,7 @@ export class ExampleService
     this.users.forEach(user => {
       if (idsToMatch.has(user._id)) userMap[user._id] = user;
     });
-    this.log(ELogLevel.SILLY)(`Getting users [${ids.join(', ')}]`);
+    this.log(LogLevel.SILLY)(`Getting users [${ids.join(', ')}]`);
     await delay(200);
     return userMap;
   };

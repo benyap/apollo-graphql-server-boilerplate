@@ -1,5 +1,5 @@
 // prettier-ignore
-export enum ELogLevel {
+export enum LogLevel {
   SILLY  = 'silly',
   DEBUG  = 'debug',
   INFO   = 'info',
@@ -9,7 +9,7 @@ export enum ELogLevel {
 }
 
 // prettier-ignore
-export enum ELogTopic {
+export enum LogTopic {
   SERVER          = 'main',
   ENVIRONMENT     = 'env',
   SERVICE         = 'srvc',

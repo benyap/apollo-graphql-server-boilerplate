@@ -1,27 +1,27 @@
 import {
-  ELogTopic,
-  ELogLevel,
+  LogTopic,
+  LogLevel,
   LoggingServiceConfiguration,
 } from '../services/LoggingService';
 
 const loggerConfig: LoggingServiceConfiguration = {
   timezone: 'Australia/Melbourne',
   showLogLevels: [
-    ELogLevel.SILLY,
-    ELogLevel.DEBUG,
-    ELogLevel.INFO,
-    ELogLevel.WARN,
-    ELogLevel.ERROR,
-    ELogLevel.FATAL,
+    LogLevel.SILLY,
+    LogLevel.DEBUG,
+    LogLevel.INFO,
+    LogLevel.WARN,
+    LogLevel.ERROR,
+    LogLevel.FATAL,
   ],
   showLogTopics: [
-    ELogTopic.SERVER,
-    ELogTopic.ENVIRONMENT,
-    ELogTopic.SERVICE,
-    ELogTopic.NETWORK,
-    ELogTopic.AUTHENTICATION,
-    ELogTopic.CONTEXTCREATOR,
-    ELogTopic.GRAPHQLCOST,
+    LogTopic.SERVER,
+    LogTopic.ENVIRONMENT,
+    LogTopic.SERVICE,
+    LogTopic.NETWORK,
+    LogTopic.AUTHENTICATION,
+    LogTopic.CONTEXTCREATOR,
+    LogTopic.GRAPHQLCOST,
   ],
 };
 

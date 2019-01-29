@@ -1,6 +1,6 @@
 import { EServiceName } from '../service/enums';
 import { AbstractService } from '../service/AbstractService';
-import { LoggingService, ELogLevel } from '../LoggingService';
+import { LoggingService, LogLevel } from '../LoggingService';
 
 import { RecordNotFoundError } from './errors/RecordNotFoundError';
 import { ICacheService, CacheRecord, CacheServiceConfiguration } from './types';
@@ -18,7 +18,7 @@ export class InMemoryCacheService<T>
   public init = async (config: CacheServiceConfiguration) => {
     this.cacheName = config.cacheName;
     this.log = config.log || LoggingService.void;
-    this.log(ELogLevel.DEBUG)(`Cache service initialised [${this.cacheName}].`);
+    this.log(LogLevel.DEBUG)(`Cache service initialised [${this.cacheName}].`);
   };
 
   public getCacheName = () => this.cacheName;
@@ -53,12 +53,12 @@ export class InMemoryCacheService<T>
   };
 
   public reset = () => {
-    this.log(ELogLevel.DEBUG)(`Cache[${this.cacheName}]: Resetting records`);
+    this.log(LogLevel.DEBUG)(`Cache[${this.cacheName}]: Resetting records`);
     this.records = {};
   };
 
   public put = (id: string, data: T, time: number = Date.now()) => {
-    this.log(ELogLevel.DEBUG)(
+    this.log(LogLevel.DEBUG)(
       `Cache[${this.cacheName}]: Putting ${id} in cache`,
     );
     this.records[id] = {
@@ -70,19 +70,19 @@ export class InMemoryCacheService<T>
 
   public seen = (id: string, date: number = Date.now()) => {
     if (!this.hasRecord(id)) throw new RecordNotFoundError(this.cacheName, id);
-    this.log(ELogLevel.SILLY)(`Cache[${this.cacheName}]: Saw ${id}`);
+    this.log(LogLevel.SILLY)(`Cache[${this.cacheName}]: Saw ${id}`);
     this.records[id].seen = date;
   };
 
   public makeStale = (id: string) => {
-    this.log(ELogLevel.SILLY)(`Cache[${this.cacheName}]: ${id} got stale`);
+    this.log(LogLevel.SILLY)(`Cache[${this.cacheName}]: ${id} got stale`);
     if (!this.hasRecord(id)) throw new RecordNotFoundError(this.cacheName, id);
     this.records[id].stale = true;
   };
 
   public remove = (id: string) => {
     if (!this.hasRecord(id)) throw new RecordNotFoundError(this.cacheName, id);
-    this.log(ELogLevel.DEBUG)(
+    this.log(LogLevel.DEBUG)(
       `Cache[${this.cacheName}]: Removing ${id} from cache`,
     );
     delete this.records[id];

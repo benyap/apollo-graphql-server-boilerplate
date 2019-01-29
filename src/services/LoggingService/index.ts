@@ -1,5 +1,5 @@
 import { LoggingService } from './LoggingService';
-import { ELogTopic, ELogLevel } from './enums';
+import { LogTopic, LogLevel } from './enums';
 import {
   ILoggingService,
   LoggingServiceConfiguration,
@@ -22,7 +22,7 @@ export {
   ILoggingService,
   LoggingServiceConfiguration,
   LoggerLevelOutputFn,
-  ELogLevel,
-  ELogTopic,
+  LogLevel,
+  LogTopic,
   LoggingService,
 };

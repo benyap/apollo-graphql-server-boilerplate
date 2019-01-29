@@ -3,7 +3,7 @@ import { EServiceName } from '../service/enums';
 import { ServerEnvironment } from '../service/types';
 import { ServerConfiguration } from '../../server/types';
 
-import { LoggingService, ELogLevel } from '../LoggingService';
+import { LoggingService, LogLevel } from '../LoggingService';
 import { IAuthenticationService } from '../AuthenticationService';
 import ServiceLibrary, { IServiceLibrary } from '../ServiceLibrary';
 
@@ -34,7 +34,7 @@ export class ContextCreatorService
     this.authenticationService = config.authenticationService;
     this.serviceLibrary = config.serviceLibrary;
     this.log = config.log || LoggingService.void;
-    this.log(ELogLevel.DEBUG)('Context creator service initialised.');
+    this.log(LogLevel.DEBUG)('Context creator service initialised.');
     // FIXME: DEMO ONLY: example service
     this.exampleService = new ExampleService();
     await this.exampleService.init({ logger: this.log });
@@ -63,16 +63,16 @@ export class ContextCreatorService
 
       // Check if user is authenticated to perform the requested action
       // FIXME: implement permission checking logic
-      this.log(ELogLevel.WARN)(`Permission checking logic not implemented`);
+      this.log(LogLevel.WARN)(`Permission checking logic not implemented`);
 
       // Injext permitted services into the context
       // FIXME: implement service injection logic
       const serviceLibrary = new ServiceLibrary();
       await serviceLibrary.init({});
-      this.log(ELogLevel.WARN)(`Service injection logic not implemented`);
+      this.log(LogLevel.WARN)(`Service injection logic not implemented`);
 
       // FIXME: DEMO ONLY: example service
-      this.log(ELogLevel.INFO)(`Injecting example service.`);
+      this.log(LogLevel.INFO)(`Injecting example service.`);
       serviceLibrary.addService(this.exampleService);
 
       // Run the `newContext` method for all services
@@ -90,7 +90,7 @@ export class ContextCreatorService
       };
       return context;
     } catch (error) {
-      this.log(ELogLevel.ERROR)(error);
+      this.log(LogLevel.ERROR)(error);
     }
   };
 }

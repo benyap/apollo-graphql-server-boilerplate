@@ -1,7 +1,7 @@
 import { AbstractService } from '../service/AbstractService';
 import { EServiceName } from '../service/enums';
 
-import { LoggingService, ELogLevel } from '../LoggingService';
+import { LoggingService, LogLevel } from '../LoggingService';
 
 import {
   AuthenticationServiceConfiguration,
@@ -19,7 +19,7 @@ export class AuthenticationService
 
   public init = async (config: AuthenticationServiceConfiguration) => {
     this.log = config.log || LoggingService.void;
-    this.log(ELogLevel.DEBUG)('Authentication service initialised.');
+    this.log(LogLevel.DEBUG)('Authentication service initialised.');
   };
 
   /**
@@ -34,7 +34,7 @@ export class AuthenticationService
     const result: AuthenticationResult = {};
 
     // FIXME: Add authentication logic here.
-    this.log(ELogLevel.WARN)(`No authentication logic implemented.`);
+    this.log(LogLevel.WARN)(`No authentication logic implemented.`);
 
     return result;
   };

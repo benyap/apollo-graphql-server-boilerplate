@@ -1,6 +1,6 @@
 import { default as costAnalysis } from 'graphql-cost-analysis';
 
-import { LoggerLevelOutputFn, ELogLevel } from '../../services/LoggingService';
+import { LoggerLevelOutputFn, LogLevel } from '../../services/LoggingService';
 
 import costMap from './costMap';
 import { Cost } from './enums';
@@ -20,9 +20,9 @@ const createCostAnalyzer = (log: LoggerLevelOutputFn) =>
     defaultCost: Cost.DEFAULT,
     onComplete(cost: number) {
       if (cost <= Cost.LIMIT) {
-        log(ELogLevel.SILLY)(`Executing query with cost ${cost}`);
+        log(LogLevel.SILLY)(`Executing query with cost ${cost}`);
       } else {
-        log(ELogLevel.WARN)(`Blocking query with cost ${cost}`);
+        log(LogLevel.WARN)(`Blocking query with cost ${cost}`);
       }
     },
   });
