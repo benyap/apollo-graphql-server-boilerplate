@@ -9,8 +9,8 @@ import { SchemaDirectiveVisitor } from 'graphql-tools';
 export default class LogDirective extends SchemaDirectiveVisitor {
   public visitFieldDefinition(field: GraphQLField<any, any>) {
     field.resolve = async (source, args, ctx, info) => {
-      // tslint:disable-next-line
-      console.log(`${field.name}: ${source[field.name]}`);
+      // FIXME: uncomment the following line to see the directive in action
+      // console.log(`@log directive - ${field.name}: ${source[field.name]}`);
       return source[field.name];
     };
   }

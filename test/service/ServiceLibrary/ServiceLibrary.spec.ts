@@ -65,6 +65,12 @@ describe('ServiceLibrary', () => {
         new ServiceUnavailableError(`${EServiceName.ServiceLibrary}-unique`),
       );
     });
+    it('gets all services from the library', () => {
+      library.addService(service, '1');
+      library.addService(service, '2');
+      const services = library.getServices();
+      expect(services.length).toBe(2);
+    });
     it('removes an existing service', () => {
       library.addService(service);
       expect(library.getService(EServiceName.ServiceLibrary)).toEqual(service);

@@ -46,4 +46,8 @@ export class InMemoryServiceLibrary
     if (!service) throw new ServiceUnavailableError(key);
     return service;
   }
+
+  public getServices() {
+    return Object.keys(this.services).map(id => this.services[id]);
+  }
 }

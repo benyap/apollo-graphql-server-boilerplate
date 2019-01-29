@@ -3,8 +3,9 @@ import { getIntrospectionQuery } from 'graphql';
 import { User, UserInput } from '../graphql/typeDefs/models/User';
 
 export interface IExampleService extends IService<{}> {
-  getUser(id: string): User;
-  getUsers(limit?: number): User[];
-  addUser(user: UserInput): User;
-  deleteUser(id: string): User[];
+  loadUser(id: string): Promise<User>;
+  loadUsers(ids: string[]): Promise<User[]>;
+  getUsers(limit?: number): Promise<User[]>;
+  addUser(user: UserInput): Promise<User>;
+  deleteUser(id: string): Promise<User[]>;
 }

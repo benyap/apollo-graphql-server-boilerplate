@@ -23,8 +23,7 @@ export class ContextCreatorService
   private authenticationService: IAuthenticationService;
   private serviceLibrary: IServiceLibrary;
 
-  // FIXME: DEMO ONLY: example service
-  private exampleService: IExampleService = new ExampleService();
+  private exampleService: IExampleService;
 
   constructor() {
     super(EServiceName.ContextCreatorService, 'ContextCreatorService');
@@ -36,6 +35,9 @@ export class ContextCreatorService
     this.serviceLibrary = config.serviceLibrary;
     this.log = config.log || LoggingService.void;
     this.log(ELogLevel.DEBUG)('Context creator service initialised.');
+    // FIXME: DEMO ONLY: example service
+    this.exampleService = new ExampleService();
+    await this.exampleService.init({ logger: this.log });
   }
 
   /**
@@ -69,6 +71,9 @@ export class ContextCreatorService
       // FIXME: DEMO ONLY: example service
       this.log(ELogLevel.INFO)(`Injecting example service.`);
       serviceLibrary.addService(this.exampleService);
+
+      // Run the `newContext` method for all services
+      serviceLibrary.getServices().forEach(service => service.newContext());
 
       // Construct context
       const context: GraphQLContext = {

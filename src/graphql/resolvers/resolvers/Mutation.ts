@@ -7,22 +7,22 @@ import { pubSub, SubscriptionTopic } from '../../pubsub';
 
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
-  addUser: (parent, args, ctx) => {
+  addUser: async (parent, args, ctx) => {
     const example: IExampleService = ctx.lib.getService<IExampleService>(
       EServiceName.ExampleService,
     );
-    const newUser = example.addUser(args.user);
+    const newUser = await example.addUser(args.user);
     pubSub
       .publish(SubscriptionTopic.EXAMPLE, { newUser })
       // FIXME: normally you would use a LoggingService here to capture the error
       .catch();
     return newUser;
   },
-  deleteUser: (parent, args, ctx) => {
+  deleteUser: async (parent, args, ctx) => {
     const example: IExampleService = ctx.lib.getService<IExampleService>(
       EServiceName.ExampleService,
     );
-    example.deleteUser(args.id);
+    await example.deleteUser(args.id);
     return example.getUsers();
   },
 };

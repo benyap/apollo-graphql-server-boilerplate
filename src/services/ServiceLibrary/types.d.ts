@@ -27,4 +27,9 @@ export interface IServiceLibrary extends IService<ServiceLibraryConfiguration> {
     serviceName: EServiceName,
     identifier?: string,
   ): T;
+
+  /**
+   * Get the `IService` interface for all services in the library.
+   */
+  getServices(): Array<IService<any>>;
 }

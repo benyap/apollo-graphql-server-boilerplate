@@ -24,4 +24,8 @@ export abstract class AbstractService<T> implements IService<T> {
   }
 
   public abstract init(config: T);
+
+  public newContext() {
+    // Override this function and run any context-specific set up.
+  }
 }

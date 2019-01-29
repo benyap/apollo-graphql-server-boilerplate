@@ -10,7 +10,7 @@ export const Query: QueryResolvers.Type = {
     const example: IExampleService = ctx.lib.getService<IExampleService>(
       EServiceName.ExampleService,
     );
-    return example.getUser(args.id);
+    return example.loadUser(args.id);
   },
   users: (parent, args, ctx) => {
     const example: IExampleService = ctx.lib.getService<IExampleService>(

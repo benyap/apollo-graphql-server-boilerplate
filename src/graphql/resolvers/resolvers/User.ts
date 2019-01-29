@@ -8,11 +8,11 @@ import { EServiceName } from '../../../services/service/enums';
 export const User: UserResolvers.Type = {
   ...UserResolvers.defaultResolvers,
 
-  friends: (parent, args, ctx) => {
+  friends: async (parent, args, ctx) => {
     const example: IExampleService = ctx.lib.getService<IExampleService>(
       EServiceName.ExampleService,
     );
-    const friends: UserModel[] = parent.friendIds.map(u => example.getUser(u));
+    const friends: UserModel[] = await example.loadUsers(parent.friendIds);
     return friends;
   },
 };
