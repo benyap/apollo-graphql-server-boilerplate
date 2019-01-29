@@ -5,14 +5,27 @@ import {
   AxiosNetworkService,
   INetworkService,
 } from '../../../src/services/NetworkService';
+import { LoggingService } from '../../../src/services/LoggingService';
+import { EServiceName } from '../../../src/services/service/enums';
 
 describe('AxiosNetworkService', () => {
   describe('constructor', () => {
+    it('creates a network service', () => {
+      const library = new AxiosNetworkService();
+      expect(library.getServiceName()).toEqual(EServiceName.NetworkService);
+      expect(library.getImplementationName()).toEqual('AxiosNetworkService');
+    });
     it('uses the given logger', async () => {
-      const loggerSpy = sinon.spy();
-      const log = () => loggerSpy;
       const net = new AxiosNetworkService();
-      await net.init({ log });
+      const loggerSpy = sinon.spy();
+      await net.init({ log: () => loggerSpy });
+      expect(loggerSpy.calledOnce).toBe(true);
+    });
+    it('uses the default logger when not given one', async () => {
+      const net = new AxiosNetworkService();
+      const loggerSpy = sinon.spy();
+      sinon.stub(LoggingService, 'void').callsFake(() => loggerSpy);
+      await net.init({});
       expect(loggerSpy.calledOnce).toBe(true);
     });
     it('uses axios by default', async () => {

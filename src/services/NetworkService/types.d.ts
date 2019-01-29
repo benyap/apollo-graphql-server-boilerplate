@@ -1,6 +1,6 @@
 import { AxiosStatic } from 'axios';
 import { IService } from '../service/types';
-import { FLoggerLevelOutputFunction } from '../LoggingService';
+import { LoggerLevelOutputFn } from '../LoggingService';
 
 interface BaseRequestOptions {
   url: string;
@@ -23,7 +23,7 @@ export interface RequestResponse<T> {
 }
 
 export interface NetworkServiceConfiguration {
-  log?: FLoggerLevelOutputFunction;
+  log?: LoggerLevelOutputFn;
   client?: AxiosStatic;
 }
 

@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import { ELogLevel, ELogTopic } from './enums';
+import { LogLevel, LogTopic } from './enums';
 
 /**
  * This function wraps a Logger level/topic name in square brackets,
@@ -23,27 +23,30 @@ const colorize = (useColor: boolean, tag: string) => (message: string) => {
   // prettier-ignore
   switch (tag) {
     // Log levels
-    case ELogLevel.SILLY:         return chalk.dim(message);
-    case ELogLevel.DEBUG:         return chalk.gray(message);
-    case ELogLevel.INFO:          return message.replace(/\[info\]/, chalk.blue('[info]'));
-    case ELogLevel.WARN:          return chalk.yellow(message);
-    case ELogLevel.ERROR:         return chalk.red(message);
-    case ELogLevel.FATAL:         return chalk.bgRed.white(message);
+    case LogLevel.SILLY:         return chalk.dim(message);
+    case LogLevel.DEBUG:         return chalk.gray(message);
+    case LogLevel.INFO:          return message.replace(/\[info\]/, chalk.blue('[info]'));
+    case LogLevel.WARN:          return chalk.yellow(message);
+    case LogLevel.ERROR:         return chalk.red(message);
+    case LogLevel.FATAL:         return chalk.bgRed.white(message);
 
     // Log topics
-    case ELogTopic.SERVER:        return chalk.inverse.white(message);
-    case ELogTopic.ENVIRONMENT:   return chalk.inverse.gray(message);
-    case ELogTopic.NETWORK:       return chalk.inverse.blue(message);
-    case ELogTopic.SERVICE:       return chalk.inverse.gray(message);
+    case LogTopic.SERVER:          return chalk.inverse.white(message);
+    case LogTopic.ENVIRONMENT:     return chalk.inverse.gray(message);
+    case LogTopic.NETWORK:         return chalk.inverse.blue(message);
+    case LogTopic.SERVICE:
+    case LogTopic.CONTEXTCREATOR:  return chalk.inverse.gray(message);
+    case LogTopic.AUTHENTICATION:  return chalk.inverse.red(message);
+    case LogTopic.GRAPHQLCOST:     return chalk.inverse.magenta(message);
 
     default:                      return message;
   }
 };
 
-export const wrapLevelTag = (tag: ELogLevel, useColor: boolean) =>
+export const wrapLevelTag = (tag: LogLevel, useColor: boolean) =>
   colorize(useColor, tag)(wrapTag(5)(tag));
 
-export const wrapTopicTag = (tag: ELogTopic, useColor: boolean) =>
+export const wrapTopicTag = (tag: LogTopic, useColor: boolean) =>
   colorize(useColor, tag)(wrapTag(4)(tag));
 
 export { colorize };

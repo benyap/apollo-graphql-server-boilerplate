@@ -2,8 +2,8 @@ import sinon from 'sinon';
 import {
   LoggingService,
   ILoggingService,
-  ELogLevel,
-  ELogTopic,
+  LogLevel,
+  LogTopic,
   LoggingServiceConfiguration,
 } from '../../../src/services/LoggingService';
 
@@ -13,8 +13,8 @@ describe('LoggingService', () => {
       const loggingService = new LoggingService();
       await loggingService.init(
         {
-          showLogLevels: [ELogLevel.INFO],
-          showLogTopics: [ELogTopic.SERVER],
+          showLogLevels: [LogLevel.INFO],
+          showLogTopics: [LogTopic.SERVER],
           timezone: 'Australia/Melbourne',
         },
         true,
@@ -25,8 +25,8 @@ describe('LoggingService', () => {
     it('sets using color correctly (false)', async () => {
       const loggingService = new LoggingService();
       await loggingService.init({
-        showLogLevels: [ELogLevel.INFO],
-        showLogTopics: [ELogTopic.SERVER],
+        showLogLevels: [LogLevel.INFO],
+        showLogTopics: [LogTopic.SERVER],
         timezone: 'Australia/Melbourne',
       });
       expect(loggingService.usingColor()).toBe(false);
@@ -36,8 +36,8 @@ describe('LoggingService', () => {
   describe('LoggingService methods', () => {
     let loggingService: ILoggingService;
     const config: LoggingServiceConfiguration = {
-      showLogLevels: [ELogLevel.INFO],
-      showLogTopics: [ELogTopic.SERVER],
+      showLogLevels: [LogLevel.INFO],
+      showLogTopics: [LogTopic.SERVER],
       timezone: 'Australia/Melbourne',
     };
     beforeEach(async () => {
@@ -60,9 +60,7 @@ describe('LoggingService', () => {
 
     describe('creating loggers', () => {
       it('throws an error when there is no output given yet', () => {
-        const log = loggingService.createLogger(ELogTopic.SERVER)(
-          ELogLevel.INFO,
-        );
+        const log = loggingService.createLogger(LogTopic.SERVER)(LogLevel.INFO);
         const test = () => log('hello');
         expect(test).toThrow(
           new Error('No output function given to logger yet.'),
@@ -71,34 +69,32 @@ describe('LoggingService', () => {
       it('creates a logger for a valid level and topic', () => {
         const outputSpy = sinon.spy();
         loggingService.addOutput('output', outputSpy);
-        const log = loggingService.createLogger(ELogTopic.SERVER)(
-          ELogLevel.INFO,
-        );
+        const log = loggingService.createLogger(LogTopic.SERVER)(LogLevel.INFO);
         log('hello');
         expect(outputSpy.args[0][0]).toEqual(config);
-        expect(outputSpy.args[0][1]).toEqual(ELogTopic.SERVER);
-        expect(outputSpy.args[0][2]).toEqual(ELogLevel.INFO);
+        expect(outputSpy.args[0][1]).toEqual(LogTopic.SERVER);
+        expect(outputSpy.args[0][2]).toEqual(LogLevel.INFO);
         expect(outputSpy.args[0][3]).toEqual('hello');
         expect(outputSpy.args[0][4]).toEqual(false);
       });
       it('creates a logger for a valid level and topic with colour', () => {
         const outputSpy = sinon.spy();
         loggingService.addOutput('output', outputSpy);
-        const log = loggingService.createLogger(ELogTopic.SERVER, true)(
-          ELogLevel.INFO,
+        const log = loggingService.createLogger(LogTopic.SERVER, true)(
+          LogLevel.INFO,
         );
         log('hello');
         expect(outputSpy.args[0][0]).toEqual(config);
-        expect(outputSpy.args[0][1]).toEqual(ELogTopic.SERVER);
-        expect(outputSpy.args[0][2]).toEqual(ELogLevel.INFO);
+        expect(outputSpy.args[0][1]).toEqual(LogTopic.SERVER);
+        expect(outputSpy.args[0][2]).toEqual(LogLevel.INFO);
         expect(outputSpy.args[0][3]).toEqual('hello');
         expect(outputSpy.args[0][4]).toEqual(true);
       });
       it('does not create a logger for an invalid level', () => {
         const outputSpy = sinon.spy();
         loggingService.addOutput('output', outputSpy);
-        const log = loggingService.createLogger(ELogTopic.SERVER)(
-          ELogLevel.DEBUG,
+        const log = loggingService.createLogger(LogTopic.SERVER)(
+          LogLevel.DEBUG,
         );
         log('hello');
         expect(outputSpy.notCalled).toBe(true);
@@ -106,8 +102,8 @@ describe('LoggingService', () => {
       it('creates a logger for an invalid topic', () => {
         const outputSpy = sinon.spy();
         loggingService.addOutput('output', outputSpy);
-        const log = loggingService.createLogger(ELogTopic.ENVIRONMENT)(
-          ELogLevel.INFO,
+        const log = loggingService.createLogger(LogTopic.ENVIRONMENT)(
+          LogLevel.INFO,
         );
         log('hello');
         expect(outputSpy.notCalled).toBe(true);

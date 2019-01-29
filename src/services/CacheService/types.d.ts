@@ -1,5 +1,5 @@
 import { IService } from '../service/types';
-import { FLoggerLevelOutputFunction } from '../LoggingService';
+import { LoggerLevelOutputFn } from '../LoggingService';
 
 export interface CacheRecord<T> {
   /**
@@ -27,7 +27,7 @@ export interface CacheServiceConfiguration {
   /**
    * Logging function.
    */
-  log?: FLoggerLevelOutputFunction;
+  log?: LoggerLevelOutputFn;
 }
 
 export interface ICacheService<T> extends IService<CacheServiceConfiguration> {

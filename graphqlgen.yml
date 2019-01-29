@@ -1,0 +1,18 @@
+# https://oss.prisma.io/graphqlgen/01-configuration.html
+
+language: typescript
+
+schema: ./src/graphql/generated/schema.graphql
+context: ./src/services/ContextCreatorService/types.d.ts:GraphQLContext
+
+models:
+  # Add model definitions here
+  files:
+    - ./src/graphql/typeDefs/models/User.d.ts
+    - ./src/graphql/typeDefs/models/ServerDiagnostics.d.ts
+
+output: ./src/graphql/types.ts
+
+resolver-scaffolding:
+  output: ./src/graphql/generated/resolvers/
+  layout: file-per-type
