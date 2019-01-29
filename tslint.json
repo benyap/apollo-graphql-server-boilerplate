@@ -38,7 +38,6 @@
     "arrow-return-shorthand": true,
     "comment-format": [true, "check-space"],
     "interface-name": false,
-    "member-access": false,
     "member-ordering": [true, { "order": "fields-first" }],
     "no-any": false,
     "no-empty-interface": false,

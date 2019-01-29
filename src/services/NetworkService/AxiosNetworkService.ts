@@ -22,13 +22,13 @@ export class AxiosNetworkService
     super(EServiceName.NetworkService, 'AxiosNetworkService');
   }
 
-  public async init(config: NetworkServiceConfiguration) {
+  public init = async (config: NetworkServiceConfiguration) => {
     this.client = config.client || axios;
     this.log = config.log || LoggingService.void;
     this.log(ELogLevel.DEBUG)(`Network service initialised.`);
-  }
+  };
 
-  public async get<T>(options: GetRequestOptions) {
+  public get = async <T>(options: GetRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
     if (options.params) requestOptions.params = options.params;
@@ -40,9 +40,9 @@ export class AxiosNetworkService
       statusText: result.statusText,
       headers: result.headers,
     } as RequestResponse<T>;
-  }
+  };
 
-  public async post<T>(options: PostRequestOptions) {
+  public post = async <T>(options: PostRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
     this.log(ELogLevel.SILLY)(`Sending POST to ${options.url}`);
@@ -57,9 +57,9 @@ export class AxiosNetworkService
       statusText: result.statusText,
       headers: result.headers,
     } as RequestResponse<T>;
-  }
+  };
 
-  public async delete(options: GetRequestOptions) {
+  public delete = async (options: GetRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
     if (options.params) requestOptions.params = options.params;
@@ -71,5 +71,5 @@ export class AxiosNetworkService
       statusText: result.statusText,
       headers: result.headers,
     } as RequestResponse<any>;
-  }
+  };
 }

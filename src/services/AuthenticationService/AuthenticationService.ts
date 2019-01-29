@@ -17,10 +17,10 @@ export class AuthenticationService
     super(EServiceName.AuthenticationService, 'AuthenticationService');
   }
 
-  public async init(config: AuthenticationServiceConfiguration) {
+  public init = async (config: AuthenticationServiceConfiguration) => {
     this.log = config.log || LoggingService.void;
     this.log(ELogLevel.DEBUG)('Authentication service initialised.');
-  }
+  };
 
   /**
    * This method will authenticate the given token and return appropriate
@@ -30,12 +30,12 @@ export class AuthenticationService
    *
    * @param token the authorization token that needs to be authenticated
    */
-  public async authenticate(token: string) {
+  public authenticate = async (token: string) => {
     const result: AuthenticationResult = {};
 
     // FIXME: Add authentication logic here.
     this.log(ELogLevel.WARN)(`No authentication logic implemented.`);
 
     return result;
-  }
+  };
 }

@@ -15,17 +15,12 @@ export abstract class AbstractService<T> implements IService<T> {
     this.log = () => () => null;
   }
 
-  public getServiceName() {
-    return this.serviceName;
-  }
+  public getServiceName = () => this.serviceName;
 
-  public getImplementationName() {
-    return this.implementationName;
-  }
+  public getImplementationName = () => this.implementationName;
 
   public abstract init(config: T);
 
-  public newContext() {
-    // Override this function and run any context-specific set up.
-  }
+  // Override this function and run any context-specific set up.
+  public newContext = () => null;
 }

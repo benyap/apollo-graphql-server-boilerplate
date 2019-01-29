@@ -7,7 +7,7 @@ import path from 'path';
  * @param startPath path relative to this file or other file which requires this files
  * @param filter regex used to match file names
  */
-function findFilesInDirectory(startPath: string, filter: RegExp) {
+const findFilesInDirectory = (startPath: string, filter: RegExp) => {
   let results = [];
 
   if (!fs.existsSync(startPath)) {
@@ -29,6 +29,6 @@ function findFilesInDirectory(startPath: string, filter: RegExp) {
   });
 
   return results;
-}
+};
 
 export default findFilesInDirectory;

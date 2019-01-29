@@ -29,7 +29,7 @@ export class ContextCreatorService
     super(EServiceName.ContextCreatorService, 'ContextCreatorService');
   }
 
-  public async init(config: ContextCreatorServiceConfiguration) {
+  public init = async (config: ContextCreatorServiceConfiguration) => {
     this.serverConfig = config.serverConfig;
     this.authenticationService = config.authenticationService;
     this.serviceLibrary = config.serviceLibrary;
@@ -38,7 +38,7 @@ export class ContextCreatorService
     // FIXME: DEMO ONLY: example service
     this.exampleService = new ExampleService();
     await this.exampleService.init({ logger: this.log });
-  }
+  };
 
   /**
    * This method will determine what information will be made available
@@ -50,7 +50,10 @@ export class ContextCreatorService
    * @param header the authorization header
    * @param actions the requested actions
    */
-  public async createContext(header: string = '', actions: string[] = []) {
+  public createContext = async (
+    header: string = '',
+    actions: string[] = [],
+  ) => {
     try {
       // Authenticate token
       const token = header.replace('Bearer ', '');
@@ -89,5 +92,5 @@ export class ContextCreatorService
     } catch (error) {
       this.log(ELogLevel.ERROR)(error);
     }
-  }
+  };
 }

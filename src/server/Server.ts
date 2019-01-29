@@ -46,7 +46,7 @@ export class Server {
   /**
    * Initialise all services for the server.
    */
-  public async initialiseServices() {
+  public initialiseServices = async () => {
     // Configure environment
     await configureEnvironment();
 
@@ -77,12 +77,12 @@ export class Server {
     // TODO: add more services to be initialised here if required
 
     this.log(ELogLevel.DEBUG)(`Services initialised.`);
-  }
+  };
 
   /**
    * Configure the server with services and settings so that it is ready to start.
    */
-  public async configureServer() {
+  public configureServer = async () => {
     this.log(ELogLevel.SILLY)(`Configuring server...`);
     const CERT_NAME = 'localhost';
     const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -217,13 +217,13 @@ export class Server {
     apollo.installSubscriptionHandlers(this.server);
 
     this.log(ELogLevel.DEBUG)(`Server configuration complete.`);
-  }
+  };
 
   /**
    * Start the server.
    * Remember to use `initaliseServices()` and `configureServer()` first.
    */
-  public start() {
+  public start = () => {
     const LOCAL = process.env.NODE_ENV === 'local';
 
     this.server.listen(this.portConfig, () => {
@@ -245,5 +245,5 @@ export class Server {
         }
       }
     });
-  }
+  };
 }

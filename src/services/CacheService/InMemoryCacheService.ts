@@ -15,11 +15,11 @@ export class InMemoryCacheService<T>
     super(EServiceName.CacheService, 'InMemoryCacheService');
   }
 
-  public async init(config: CacheServiceConfiguration) {
+  public init = async (config: CacheServiceConfiguration) => {
     this.cacheName = config.cacheName;
     this.log = config.log || LoggingService.void;
     this.log(ELogLevel.DEBUG)(`Cache service initialised [${this.cacheName}].`);
-  }
+  };
 
   public getCacheName = () => this.cacheName;
 

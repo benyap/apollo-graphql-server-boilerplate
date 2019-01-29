@@ -16,38 +16,40 @@ export class InMemoryServiceLibrary
     super(EServiceName.ServiceLibrary, 'InMemoryServiceLibrary');
   }
 
-  public async init(config: ServiceLibraryConfiguration) {
+  public init = async (config: ServiceLibraryConfiguration) => {
     this.services = {};
     this.log = config.log || LoggingService.void;
     this.log(ELogLevel.DEBUG)(`Service library initialised.`);
-  }
+  };
 
-  public addService(service: IService<object>, identifier: string = '') {
+  public addService = (service: IService<object>, identifier: string = '') => {
     const key = `${service.getServiceName()}${
       identifier ? `-${identifier}` : ''
     }`;
     this.services[key] = service;
     this.log(ELogLevel.SILLY)(`Added service: ${key}`);
     return key;
-  }
+  };
 
-  public removeService(serviceName: EServiceName, identifier: string = '') {
+  public removeService = (
+    serviceName: EServiceName,
+    identifier: string = '',
+  ) => {
     const key = `${serviceName}${identifier ? `-${identifier}` : ''}`;
     delete this.services[key];
     this.log(ELogLevel.SILLY)(`Removed service: ${key}`);
-  }
+  };
 
-  public getService<T extends IService<object>>(
+  public getService = <T extends IService<object>>(
     serviceName: EServiceName,
     identifier: string = '',
-  ) {
+  ) => {
     const key = `${serviceName}${identifier ? `-${identifier}` : ''}`;
     const service = this.services[key] as T;
     if (!service) throw new ServiceUnavailableError(key);
     return service;
-  }
+  };
 
-  public getServices() {
-    return Object.keys(this.services).map(id => this.services[id]);
-  }
+  public getServices = () =>
+    Object.keys(this.services).map(id => this.services[id]);
 }

@@ -34,10 +34,10 @@ export class ExampleService
     this.log = config.logger || LoggingService.void;
   };
 
-  public newContext() {
+  public newContext = () => {
     this.log(ELogLevel.SILLY)(`Created new DataLoader`);
     this.loader = new DataLoader<string, User>(this.batchLoadUsers);
-  }
+  };
 
   public loadUser = (id: string) => {
     return this.loader.load(id);
