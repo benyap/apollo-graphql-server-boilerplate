@@ -7,11 +7,12 @@ import morgan from 'morgan';
 import enforce from 'express-sslify';
 import { parse } from 'graphql';
 import { collectFields } from '../graphql/utils/graphqlOperationUtils';
+import { EnhancedApolloServer } from './EnhancedApolloServer';
 
-import { ApolloServer, Config } from 'apollo-server-express';
+import { Config } from 'apollo-server-express';
 
 import generateGraphQLDefinitions from '../graphql';
-import createCostAnalyzer from '../graphql/cost';
+import createCostAnalyzerOptions from '../graphql/cost';
 
 import configureEnvironment from '../environment/configureEnvironment';
 
@@ -129,15 +130,20 @@ export class Server {
           );
         },
       },
-      validationRules: [
-        // Cost analysis: blocks queries that are too expensive
-        // https://github.com/pa-bru/graphql-cost-analysis
-        createCostAnalyzer(loggingService.createLogger(LogTopic.GRAPHQLCOST)),
-      ],
     };
 
+    /**
+     * FIXME: using the EnhancedApolloServer because it provides
+     * a custom extension that provides a workaround for a plugin
+     * issue with graphql-cost-anlysis.
+     */
     // Create Apollo server with GraphQL typeDefs and resolvers
-    const apollo = new ApolloServer(apolloServerOptions);
+    const apollo = new EnhancedApolloServer(
+      apolloServerOptions,
+      createCostAnalyzerOptions(
+        loggingService.createLogger(LogTopic.GRAPHQLCOST),
+      ),
+    );
 
     // =======================
     //  Express configuration
