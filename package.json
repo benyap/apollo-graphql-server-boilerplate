@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "An opinionated Apollo GraphQL server stack boilerplate to kickstart your next project",
   "main": "src/index.ts",
+  "engines": {
+    "npm": ">=5",
+    "node": ">=8.10.0"
+  },
   "scripts": {
     "start": "yarn build && concurrently -k \"tsc --watch\" \"cpx src/**/*.graphql build -w\" \"nodemon -e ts,graphql build/index.js\"",
     "start:prod": "node build/index.js",
