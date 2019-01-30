@@ -8,7 +8,7 @@ import { EServiceName } from '../../../src/services/service/enums';
 import { LoggingService } from '../../../src/services/LoggingService';
 import { RecordNotFoundError } from '../../../src/services/CacheService/errors/RecordNotFoundError';
 
-describe('InMemoryCacheService', () => {
+describe('Service: InMemoryCacheService', () => {
   describe('constructor', () => {
     it('creates a cache service', () => {
       const cache = new InMemoryCacheService();

@@ -1,4 +1,4 @@
-import Scalars from './Scalars';
+import scalars from './scalars';
 import { resolvers } from './resolvers';
 
 /**
@@ -9,10 +9,11 @@ import { resolvers } from './resolvers';
  *
  * @param env the current server environment (UNUSED)
  */
-const generateResolvers = (env: string) => {
+const generateResolvers = (env?: string) => {
   return {
+    // NOTE: casting to object to prevent unresolved type errors
     ...(resolvers as object),
-    ...Scalars,
+    ...scalars,
   };
 };
 

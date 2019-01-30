@@ -1,7 +1,7 @@
 import createLoggingService from '../../../src/services/LoggingService';
 import { EServiceName } from '../../../src/services/service/enums';
 
-describe('createLoggingService', () => {
+describe('Service: createLoggingService', () => {
   it('creates a logging service without colour', async () => {
     const log = await createLoggingService({
       timezone: 'tz',

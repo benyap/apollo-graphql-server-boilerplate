@@ -8,7 +8,7 @@ import ServiceLibrary, {
 import { EServiceName } from '../../../src/services/service/enums';
 import { ServiceUnavailableError } from '../../../src/services/ServiceLibrary/errors/ServiceUnavailableError';
 
-describe('ServiceLibrary', () => {
+describe('Service: ServiceLibrary', () => {
   describe('constructor', () => {
     it('creates a service library', () => {
       const library = new ServiceLibrary();

@@ -7,7 +7,7 @@ import {
   LoggingServiceConfiguration,
 } from '../../../src/services/LoggingService';
 
-describe('LoggingService', () => {
+describe('Service: LoggingService', () => {
   describe('constructor', () => {
     it('sets using color correctly (true)', async () => {
       const loggingService = new LoggingService();

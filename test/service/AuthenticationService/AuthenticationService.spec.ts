@@ -6,7 +6,7 @@ import {
 import { EServiceName } from '../../../src/services/service/enums';
 import { LoggingService } from '../../../src/services/LoggingService';
 
-describe('AuthenticationService', () => {
+describe('Service: AuthenticationService', () => {
   describe('constructor', () => {
     it('creates an authentication service', () => {
       const auth = new AuthenticationService();

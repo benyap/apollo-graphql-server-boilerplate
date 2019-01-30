@@ -6,7 +6,7 @@ import {
   LoggingServiceConfiguration,
 } from '../../../src/services/LoggingService';
 
-describe('creating pre-configured loggers', () => {
+describe('Service: creating pre-configured loggers', () => {
   it('creates a default logger with no colour and prints a string', () => {
     const logger = createDefaultLogger();
     const consoleStub = sinon.stub(console, 'log');

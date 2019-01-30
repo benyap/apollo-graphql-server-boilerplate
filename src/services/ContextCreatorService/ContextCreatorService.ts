@@ -13,8 +13,10 @@ import {
   GraphQLContext,
 } from './types';
 
-import { ExampleService } from '../../example/service';
-import { IExampleService } from '../../example/types';
+import { ExampleService } from '../../services/ExampleService/service';
+import { IExampleService } from '../../services/ExampleService/types';
+
+import { getUserData } from '../ExampleService/data';
 
 export class ContextCreatorService
   extends AbstractService<ContextCreatorServiceConfiguration>
@@ -37,7 +39,7 @@ export class ContextCreatorService
     this.log(LogLevel.DEBUG)('Context creator service initialised.');
     // FIXME: DEMO ONLY: example service
     this.exampleService = new ExampleService();
-    await this.exampleService.init({ logger: this.log });
+    await this.exampleService.init({ getUserData, logger: this.log });
   };
 
   /**

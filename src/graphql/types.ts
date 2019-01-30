@@ -5,8 +5,6 @@ import { ServerDiagnostics } from './typeDefs/models/ServerDiagnostics.d';
 import { User } from './typeDefs/models/User.d';
 import { GraphQLContext } from '../services/ContextCreatorService/types.d';
 
-export type ServerEnvironment = 'production' | 'qat' | 'development' | 'local';
-
 export namespace QueryResolvers {
   export const defaultResolvers = {};
 
@@ -23,7 +21,7 @@ export namespace QueryResolvers {
     args: {},
     ctx: GraphQLContext,
     info: GraphQLResolveInfo,
-  ) => ServerDiagnostics | Promise<ServerDiagnostics>;
+  ) => ServerDiagnostics | null | Promise<ServerDiagnostics | null>;
 
   export type UserResolver = (
     parent: undefined,
@@ -52,7 +50,7 @@ export namespace QueryResolvers {
       args: {},
       ctx: GraphQLContext,
       info: GraphQLResolveInfo,
-    ): ServerDiagnostics | Promise<ServerDiagnostics>;
+    ): ServerDiagnostics | null | Promise<ServerDiagnostics | null>;
 
     user(
       parent: undefined,
@@ -79,38 +77,53 @@ export namespace QueryResolvers {
 
 export namespace ServerDiagnosticsResolvers {
   export const defaultResolvers = {
+    environment: (parent: ServerDiagnostics) => parent.environment,
     version: (parent: ServerDiagnostics) => parent.version,
     startDate: (parent: ServerDiagnostics) => parent.startDate,
   };
+
+  export type EnvironmentResolver = (
+    parent: ServerDiagnostics,
+    args: {},
+    ctx: GraphQLContext,
+    info: GraphQLResolveInfo,
+  ) => string | null | Promise<string | null>;
 
   export type VersionResolver = (
     parent: ServerDiagnostics,
     args: {},
     ctx: GraphQLContext,
     info: GraphQLResolveInfo,
-  ) => string | Promise<string>;
+  ) => string | null | Promise<string | null>;
 
   export type StartDateResolver = (
     parent: ServerDiagnostics,
     args: {},
     ctx: GraphQLContext,
     info: GraphQLResolveInfo,
-  ) => Date | Promise<Date>;
+  ) => string | null | Promise<string | null>;
 
   export interface Type {
+    environment(
+      parent: ServerDiagnostics,
+      args: {},
+      ctx: GraphQLContext,
+      info: GraphQLResolveInfo,
+    ): string | null | Promise<string | null>;
+
     version(
       parent: ServerDiagnostics,
       args: {},
       ctx: GraphQLContext,
       info: GraphQLResolveInfo,
-    ): string | Promise<string>;
+    ): string | null | Promise<string | null>;
 
     startDate(
       parent: ServerDiagnostics,
       args: {},
       ctx: GraphQLContext,
       info: GraphQLResolveInfo,
-    ): Date | Promise<Date>;
+    ): Date | null | Promise<Date | null>;
   }
 }
 
