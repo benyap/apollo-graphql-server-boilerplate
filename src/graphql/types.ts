@@ -117,13 +117,14 @@ export namespace ServerDiagnosticsResolvers {
       ctx: GraphQLContext,
       info: GraphQLResolveInfo,
     ): string | null | Promise<string | null>;
-
+    // MODIFIED
     startDate(
       parent: ServerDiagnostics,
       args: {},
       ctx: GraphQLContext,
       info: GraphQLResolveInfo,
     ): Date | null | Promise<Date | null>;
+    // END MODIFIED
   }
 }
 
@@ -262,12 +263,16 @@ export namespace SubscriptionResolvers {
 
   export interface Type {
     newUser: {
+      // MODIFIED
       subscribe(
         parent: undefined,
         args: {},
         ctx: GraphQLContext,
         info: GraphQLResolveInfo,
-      ): AsyncIterator<User | null> | Promise<AsyncIterator<User | null>>;
+      ):
+        | AsyncIterator<{ newUser: User } | null>
+        | Promise<AsyncIterator<{ newUser: User } | null>>;
+      // END MODIFIED
       resolve?(
         parent: undefined,
         args: {},

@@ -37,7 +37,7 @@ describe('GraphQL resolver: UserSubscriptions', () => {
     const args: MutationResolvers.ArgsAddUser = { user: getUserData()[5] };
     await UserMutations.addUser(null, args, context, null);
     const result = await subscription.next();
-    expect(result.value).toEqual(getUserData()[5]);
+    expect(result.value.newUser).toEqual(getUserData()[5]);
     expect(result.done).toBe(false);
   }, 1000);
 });

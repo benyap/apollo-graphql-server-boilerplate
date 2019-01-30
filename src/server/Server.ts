@@ -110,24 +110,30 @@ export class Server {
         apiKey: process.env.ENGINE_API_KEY,
       },
       context: async ({ req, connection }) => {
-        if (connection) return connection.context;
-        else {
-          const query = parse(req.body.query).definitions[0];
-          const fields = collectFields(query as any);
-          return contextCreator.createContext(
-            req.headers.authorization,
-            fields,
-          );
+        let auth: string = null;
+        let query = null;
+
+        if (!connection) {
+          // Normal request
+          auth = req.headers.authorization;
+          query = parse(req.body.query).definitions[0];
+        } else {
+          // If a connection exists, request was a subscription
+          auth = connection.context.authorization;
+          query = parse(connection.query).definitions[0];
         }
+
+        // Get the requested root fields names
+        const fields = collectFields(query);
+
+        // Generate context based on authorization and requested fields
+        return contextCreator.createContext(auth, fields);
       },
       subscriptions: {
-        onConnect: async (connectionParams, webSocket) => {
-          // TODO: investigate if there are any fields to look for here,
-          // otherwise no services will be given by context creator for
-          // subscriptions on connect.
-          return contextCreator.createContext(
-            (connectionParams as any).authorization,
-          );
+        onConnect: async (connectionParams: any) => {
+          // On connection, pass authorization header into connection
+          // context to be handled by the context function.
+          return { authorization: connectionParams.authorization };
         },
       },
     };

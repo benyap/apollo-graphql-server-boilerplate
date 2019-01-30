@@ -8,10 +8,10 @@
     "node": ">=8.10.0"
   },
   "scripts": {
-    "start": "yarn build && concurrently -k \"tsc --watch\" \"cpx src/**/*.graphql build -w\" \"nodemon -e ts,graphql build/index.js\"",
+    "start": "yarn build && concurrently -k \"tsc --watch --project tsconfig-build.json\" \"cpx src/**/*.graphql build -w\" \"nodemon -e ts,graphql build/index.js\"",
     "start:prod": "node build/index.js",
     "prebuild": "yarn build:clean",
-    "build": "cpx src/**/*.graphql build && tsc",
+    "build": "cpx src/**/*.graphql build && tsc --project tsconfig-build.json",
     "build:clean": "rimraf ./build",
     "graphql:generate": "ts-node internals/scripts/generate-graphql-schema.ts",
     "lint": "yarn lint:tslint:all",
