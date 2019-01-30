@@ -10,7 +10,7 @@ export const UserMutations: IUserMutations = {
     );
     const newUser = await example.addUser(args.user);
     pubSub
-      .publish(SubscriptionTopic.EXAMPLE, newUser)
+      .publish(SubscriptionTopic.EXAMPLE, { newUser })
       // FIXME: normally you would use a LoggingService here to capture the error
       .catch();
     return newUser;
