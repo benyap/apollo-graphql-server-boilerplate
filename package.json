@@ -26,7 +26,7 @@
     "clean:all": "yarn test:clean && yarn build:clean",
     "pretest": "yarn test:clean && yarn lint",
     "test": "cross-env NODE_ENV=test jest --coverage",
-    "test:clean": "rimraf ./coverage",
+    "test:clean": "rimraf ./coverage && rimraf ./test-results",
     "test:ci": "cross-env NODE_ENV=test jest --coverage --ci --reporters=default --reporters=jest-junit",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "test:updateSnapshot": "cross-env NODE_ENV=test jest --updateSnapshot",
@@ -49,6 +49,10 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bwyap/apollo-graphql-server-boilerplate/issues"
+  },
+  "jest-junit": {
+    "outputDirectory": "test-results/jest",
+    "outputName": "results.xml"
   },
   "homepage": "https://github.com/bwyap/apollo-graphql-server-boilerplate#readme",
   "devDependencies": {
