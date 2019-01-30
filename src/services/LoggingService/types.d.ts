@@ -1,4 +1,4 @@
-import { ELogTopic, ELogLevel } from '.';
+import { LogTopic, LogLevel } from '.';
 import { IService } from '../service/types';
 
 export interface LoggingServiceConfiguration {
@@ -10,20 +10,20 @@ export interface LoggingServiceConfiguration {
   /**
    * Whitelist of topics to output to the logger.
    */
-  showLogTopics: ELogTopic[];
+  showLogTopics: LogTopic[];
   /**
    * Whitelise of levels to output to the logger.
    */
-  showLogLevels: ELogLevel[];
+  showLogLevels: LogLevel[];
 }
 
 /**
  * A custom defined function that can handle logger output.
  */
-export type FLoggerCustomOutputFunction = (
+export type LoggerCustomOutputFn = (
   config: LoggingServiceConfiguration,
-  topic: ELogTopic,
-  level: ELogLevel,
+  topic: LogTopic,
+  level: LogLevel,
   msg: string | object,
   useColor?: boolean,
 ) => void;
@@ -31,14 +31,12 @@ export type FLoggerCustomOutputFunction = (
 /**
  * Logging output function.
  */
-export type FLoggerOuptutFunction = (msg: string | object) => void;
+export type LoggerOuptutFn = (msg: string | object) => void;
 
 /**
  * Logging output function that accepts a log level.
  */
-export type FLoggerLevelOutputFunction = (
-  level: ELogLevel,
-) => FLoggerOuptutFunction;
+export type LoggerLevelOutputFn = (level: LogLevel) => LoggerOuptutFn;
 
 export interface ILoggingService extends IService<LoggingServiceConfiguration> {
   /**
@@ -51,7 +49,7 @@ export interface ILoggingService extends IService<LoggingServiceConfiguration> {
    * @param name name of the output function
    * @param output output function
    */
-  addOutput(name: string, output: FLoggerCustomOutputFunction);
+  addOutput(name: string, output: LoggerCustomOutputFn);
 
   /**
    * Remove an output function from the logger.
@@ -62,15 +60,12 @@ export interface ILoggingService extends IService<LoggingServiceConfiguration> {
   /**
    * Gets the map of outputs added to the logger.
    */
-  getOutputs(): { [key: string]: FLoggerCustomOutputFunction };
+  getOutputs(): { [key: string]: LoggerCustomOutputFn };
 
   /**
    * Create a logger that outputs to the specified logger topic.
    * @param topic the logger topic
    * @param useColor pass true to force the logger to use color (default uses setting passed in config)
    */
-  createLogger(
-    topic: ELogTopic,
-    useColor?: boolean,
-  ): FLoggerLevelOutputFunction;
+  createLogger(topic: LogTopic, useColor?: boolean): LoggerLevelOutputFn;
 }

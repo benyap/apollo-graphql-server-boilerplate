@@ -3,7 +3,7 @@ import axios, { AxiosStatic } from 'axios';
 import { EServiceName } from '../service/enums';
 import { AbstractService } from '../service/AbstractService';
 
-import { ELogLevel, LoggingService } from '../LoggingService';
+import { LogLevel, LoggingService } from '../LoggingService';
 
 import {
   INetworkService,
@@ -22,17 +22,17 @@ export class AxiosNetworkService
     super(EServiceName.NetworkService, 'AxiosNetworkService');
   }
 
-  public async init(config: NetworkServiceConfiguration) {
+  public init = async (config: NetworkServiceConfiguration) => {
     this.client = config.client || axios;
     this.log = config.log || LoggingService.void;
-    this.log(ELogLevel.DEBUG)(`Network service initialised.`);
-  }
+    this.log(LogLevel.DEBUG)(`Network service initialised.`);
+  };
 
-  public async get<T>(options: GetRequestOptions) {
+  public get = async <T>(options: GetRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
     if (options.params) requestOptions.params = options.params;
-    this.log(ELogLevel.SILLY)(`Sending GET to ${options.url}`);
+    this.log(LogLevel.SILLY)(`Sending GET to ${options.url}`);
     const result = await this.client.get<T>(options.url, requestOptions);
     return {
       data: result.data,
@@ -40,12 +40,12 @@ export class AxiosNetworkService
       statusText: result.statusText,
       headers: result.headers,
     } as RequestResponse<T>;
-  }
+  };
 
-  public async post<T>(options: PostRequestOptions) {
+  public post = async <T>(options: PostRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
-    this.log(ELogLevel.SILLY)(`Sending POST to ${options.url}`);
+    this.log(LogLevel.SILLY)(`Sending POST to ${options.url}`);
     const result = await this.client.post<T>(
       options.url,
       options.body,
@@ -57,13 +57,13 @@ export class AxiosNetworkService
       statusText: result.statusText,
       headers: result.headers,
     } as RequestResponse<T>;
-  }
+  };
 
-  public async delete(options: GetRequestOptions) {
+  public delete = async (options: GetRequestOptions) => {
     const requestOptions: any = {};
     if (options.headers) requestOptions.headers = options.headers;
     if (options.params) requestOptions.params = options.params;
-    this.log(ELogLevel.SILLY)(`Sending DELETE to ${options.url}`);
+    this.log(LogLevel.SILLY)(`Sending DELETE to ${options.url}`);
     const result = await this.client.delete(options.url, requestOptions);
     return {
       data: result.data,
@@ -71,5 +71,5 @@ export class AxiosNetworkService
       statusText: result.statusText,
       headers: result.headers,
     } as RequestResponse<any>;
-  }
+  };
 }

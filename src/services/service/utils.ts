@@ -1,7 +1,7 @@
-import { FLoggerLevelOutputFunction } from '../LoggingService/types';
-import { ELogLevel } from '../LoggingService';
+import { LoggerLevelOutputFn } from '../LoggingService/types';
+import { LogLevel } from '../LoggingService';
 
-export const logAndThrow = (log: FLoggerLevelOutputFunction, error) => {
-  log(ELogLevel.ERROR)(error.message);
+export const logAndThrow = (log: LoggerLevelOutputFn, error) => {
+  log(LogLevel.ERROR)(error.message);
   throw error;
 };

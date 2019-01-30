@@ -1,9 +1,10 @@
 module.exports = {
   // prettier-ignore
   collectCoverageFrom: [
-    'src/services/**/*.{ts}',
-    '!src/services/service/*.{ts}',
-    '!src/services/**/errors/*.{ts}',
+    'src/services/**/*.ts',
+    'src/graphql/resolvers/**/*.ts',
+    '!src/services/service/*.ts',
+    '!src/services/**/errors/*.ts',
     '!src/**/*.d.ts',
   ],
   coverageThreshold: {
@@ -14,7 +15,7 @@ module.exports = {
       lines: 98,
     },
   },
-  roots: ['./test'],
+  roots: ['test', 'src'],
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
