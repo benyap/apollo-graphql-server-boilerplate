@@ -2,7 +2,7 @@ import * as utils from '../../../src/services/LoggingService/utils';
 import { LogLevel, LogTopic } from '../../../src/services/LoggingService/enums';
 import chalk from 'chalk';
 
-describe('LoggingService utils', () => {
+describe('Service: LoggingService utils', () => {
   describe('colorize()', () => {
     it('does not colorize message when useColor=false', () => {
       expect(utils.colorize(false, null)('message')).toEqual('message');

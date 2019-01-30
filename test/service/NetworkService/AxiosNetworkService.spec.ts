@@ -8,7 +8,7 @@ import {
 import { LoggingService } from '../../../src/services/LoggingService';
 import { EServiceName } from '../../../src/services/service/enums';
 
-describe('AxiosNetworkService', () => {
+describe('Service: AxiosNetworkService', () => {
   describe('constructor', () => {
     it('creates a network service', () => {
       const library = new AxiosNetworkService();

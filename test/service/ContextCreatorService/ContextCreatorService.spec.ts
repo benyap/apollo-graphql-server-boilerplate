@@ -14,7 +14,7 @@ import {
 } from '../../../src/services/AuthenticationService';
 import { ServerConfiguration } from '../../../src/server/types';
 
-describe('AuthenticationService', () => {
+describe('Service: AuthenticationService', () => {
   describe('constructor', () => {
     it('creates an authentication service', () => {
       const context = new ContextCreatorService();
