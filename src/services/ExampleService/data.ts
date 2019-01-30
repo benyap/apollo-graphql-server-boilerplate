@@ -1,6 +1,17 @@
-import { User } from '../graphql/typeDefs/models/User';
+import { User } from '../../graphql/typeDefs/models/User';
 
-export const users: User[] = [
+export const getUserData = () => {
+  if (!users) resetUserData();
+  return users;
+};
+
+export const resetUserData = () => {
+  users = [...baseUsers];
+};
+
+let users: User[];
+
+const baseUsers: User[] = [
   {
     _id: '1',
     firstname: 'John',

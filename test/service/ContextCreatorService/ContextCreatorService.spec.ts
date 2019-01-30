@@ -14,9 +14,9 @@ import {
 } from '../../../src/services/AuthenticationService';
 import { ServerConfiguration } from '../../../src/server/types';
 
-describe('Service: AuthenticationService', () => {
+describe('Service: ContextCreatorService', () => {
   describe('constructor', () => {
-    it('creates an authentication service', () => {
+    it('creates a context creator service', () => {
       const context = new ContextCreatorService();
       expect(context.getServiceName()).toEqual(
         EServiceName.ContextCreatorService,
@@ -32,7 +32,7 @@ describe('Service: AuthenticationService', () => {
         serviceLibrary: null,
         log: () => loggerSpy,
       });
-      expect(loggerSpy.calledOnce).toBe(true);
+      expect(loggerSpy.callCount).toBeGreaterThan(1);
     });
     it('uses the default logger when not given one', async () => {
       const context = new ContextCreatorService();
@@ -43,7 +43,7 @@ describe('Service: AuthenticationService', () => {
         serverConfig: null,
         serviceLibrary: null,
       });
-      expect(loggerSpy.calledOnce).toBe(true);
+      expect(loggerSpy.callCount).toBeGreaterThan(1);
     });
   });
 

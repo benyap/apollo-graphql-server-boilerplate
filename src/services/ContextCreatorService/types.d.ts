@@ -16,9 +16,9 @@ export interface ContextCreatorServiceConfiguration {
 
 export interface GraphQLContext extends AuthenticationResult {
   // Service library containing services available in this request
-  lib: IServiceLibrary;
+  lib?: IServiceLibrary;
   // Server diagnostics info
-  diagnostics: ServerDiagnostics;
+  diagnostics?: ServerDiagnostics;
 }
 
 export interface IContextCreatorService
