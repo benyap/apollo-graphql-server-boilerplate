@@ -18,6 +18,19 @@ const costMap: CostMap = {
       complexity: Cost.Static,
     },
   },
+  Mutation: {
+    addUser: {
+      complexity: Cost.Standard,
+    },
+    deleteUser: {
+      complexity: Cost.Standard,
+    },
+  },
+  Subscription: {
+    newUser: {
+      complexity: Cost.Standard,
+    },
+  },
   User: {
     friends: {
       // Having to resolve an array of friends adds complexity
