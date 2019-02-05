@@ -83,7 +83,7 @@
     "jest-junit": "6.2.1",
     "lint-staged": "8.1.0",
     "nodemon": "1.18.9",
-    "prettier": "1.16.1",
+    "prettier": "1.16.4",
     "rimraf": "2.6.3",
     "shelljs": "0.8.3",
     "sinon": "7.2.3",
