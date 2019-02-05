@@ -24,7 +24,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Run tests
-          command: yarn test:ci
+          command: yarn test:ci --detectOpenHandles --forceExit
       - store_test_results:
           path: test-results
       # The following two steps are done in Travis CI
