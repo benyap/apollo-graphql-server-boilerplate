@@ -46,10 +46,6 @@
   <a href="https://ci.appveyor.com/project/bwyap/apollo-graphql-server-boilerplate">
     <img src="https://ci.appveyor.com/api/projects/status/ywk6wlvw2mby5b3x?svg=true" alt="Build status (Appveyor)" />
   </a>
-  <!-- Build Status - CircleCI -->
-  <a href="https://circleci.com/gh/bwyap/apollo-graphql-server-boilerplate">
-    <img src="https://img.shields.io/circleci/project/github/bwyap/apollo-graphql-server-boilerplate.svg?logo=CircleCI" alt="Build status (Circle CI)" />
-  </a>
 </div>
 
 <div align="center">
