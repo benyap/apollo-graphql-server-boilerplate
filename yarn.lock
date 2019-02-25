@@ -226,10 +226,10 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
-"@okgrow/graphql-scalars@0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@okgrow/graphql-scalars/-/graphql-scalars-0.4.3.tgz#e70a6d27418ed6d1b0dd01fc20c4a657b68d57e4"
-  integrity sha512-bIUmKFt5/fSPa4msB2cIDp2+/yG2M1eDCldE1bPcReRZTO/s2wfdjnRA+7/GoakdV0Y4WCrZ6IrPiXXciWh7yg==
+"@okgrow/graphql-scalars@0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@okgrow/graphql-scalars/-/graphql-scalars-0.4.5.tgz#9289dffe55972b08f4313b346853ca3de03fba82"
+  integrity sha512-4bL5qEHWEYDLD+txp3PAWsrlGaE3xenFs0y7r3VW2SY1X+mSJU3Tz9mc6C0cJ3DAmS6HPuDmiIhyeTC6+o5WCA==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"

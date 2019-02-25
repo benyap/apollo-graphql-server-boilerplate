@@ -95,7 +95,7 @@
     "typescript": "3.3.3333"
   },
   "dependencies": {
-    "@okgrow/graphql-scalars": "0.4.3",
+    "@okgrow/graphql-scalars": "0.4.5",
     "apollo-server-express": "2.3.3",
     "axios": "0.18.0",
     "chalk": "2.4.2",
