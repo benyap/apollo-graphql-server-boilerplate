@@ -32,7 +32,9 @@
     "test:updateSnapshot": "cross-env NODE_ENV=test jest --updateSnapshot",
     "test:upload-appveyor": "node ./internals/scripts/upload-tests-appveyor",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "codecov": "codecov"
+    "codecov": "codecov",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -112,6 +114,8 @@
     "https": "1.0.0",
     "moment": "2.24.0",
     "moment-timezone": "0.5.23",
-    "morgan": "1.9.1"
-  }
+    "morgan": "1.9.1",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
